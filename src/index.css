@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-heading: "Playfair Display", Georgia, serif;
+  --font-body: "Lato", sans-serif;
+  
+  --color-primary: #C8A96E;
+  --color-primary-light: #DBBE85;
+  --color-primary-dark: #A8893E;
+  --color-accent: #B85C38;
+  --color-accent-light: #D4795A;
+  --color-sage: #7A8B6F;
+  --color-sage-light: #A3B396;
+  
+  --color-cream: #FFF9F0;
+  --color-warm: #FDF5E6;
+  --color-section: #FAF3E8;
+  
+  --shadow-soft: 0 4px 24px rgba(44, 24, 16, 0.06);
+  --shadow-medium: 0 8px 40px rgba(44, 24, 16, 0.10);
+  --shadow-hover: 0 12px 48px rgba(44, 24, 16, 0.14);
+  --shadow-float: 0 20px 60px rgba(44, 24, 16, 0.12);
+}
+
+@layer base {
+  :root {
+    --space-xs: 0.75rem;
+    --space-sm: 1.25rem;
+    --space-md: 2rem;
+    --space-lg: 3.5rem;
+    --space-xl: 5rem;
+    --space-2xl: 8rem;
+    --space-3xl: 10rem;
+    
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-cream);
+    color: #2C1810;
+    line-height: 1.85;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: #2C1810;
+  }
+
+  /* Utility for no-scroll when menu is open */
+  .no-scroll {
+    overflow: hidden;
+  }
+
+  /* ── Fade-in Animation Classes ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-in-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  }
+
+  .fade-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .fade-in-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  }
+
+  .fade-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .fade-in-scale {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  }
+
+  .fade-in-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

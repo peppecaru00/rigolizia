@@ -9,7 +9,11 @@
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
   "include": ["src"]
 }
