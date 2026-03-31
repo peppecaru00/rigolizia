@@ -9,6 +9,7 @@ const Navbar: React.FC = () => {
   const { lang, setLang, t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileActive, setMobileActive] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
@@ -60,36 +61,46 @@ const Navbar: React.FC = () => {
             ))}
           </ul>
 
-          <div className="relative group">
+          <div 
+            className="relative"
+            onMouseEnter={() => setLangOpen(true)}
+            onMouseLeave={() => setLangOpen(false)}
+          >
             <button 
               className={cn(
-                "h-10 px-4 border rounded-full flex items-center gap-1 font-body font-bold text-[0.75rem] transition-all duration-300",
+                "h-10 px-4 border rounded-full flex items-center gap-1 font-body font-bold text-[0.75rem] transition-all duration-300 outline-none",
                 isDarkText 
                   ? "border-black/10 text-[#2C1810] hover:border-[#B85C38] hover:bg-[#B85C38]/5" 
                   : "border-white/30 text-white hover:border-white/60 hover:bg-white/10"
               )}
+              onClick={() => setLangOpen(!langOpen)}
             >
               <span>{lang.toUpperCase()}</span>
               <ChevronDown className={cn(
-                "w-[14px] h-[14px] transition-transform duration-300 group-hover:rotate-180"
+                "w-[14px] h-[14px] transition-transform duration-300",
+                langOpen && "rotate-180"
               )} />
             </button>
 
-            <div className="absolute top-[calc(100%+4px)] right-0 bg-white rounded-xl shadow-[0_20px_60px_rgba(44,24,16,0.12)] border border-[#F4ECD9]/10 invisible group-hover:visible group-hover:opacity-100 opacity-0 flex flex-col min-w-[140px] py-2 transition-all duration-200 z-[110] before:content-[''] before:absolute before:top-[-12px] before:inset-x-0 before:h-[12px]">
+            <div className={cn(
+              "absolute top-[calc(100%+4px)] right-0 bg-white rounded-xl shadow-[0_20px_60px_rgba(44,24,16,0.12)] border border-[#F4ECD9]/10 flex flex-col min-w-[140px] py-2 transition-all duration-200 z-[110] before:content-[''] before:absolute before:top-[-12px] before:inset-x-0 before:h-[12px]",
+              langOpen ? "visible opacity-100 translate-y-0" : "invisible opacity-0 -translate-y-2 pointer-events-none"
+            )}>
               <button 
-                onClick={() => setLang('en')}
-                className="w-full text-left px-4 py-2 font-body text-[0.85rem] text-[#2C1810] hover:bg-[#B85C38]/10 hover:text-[#B85C38] transition-colors"
+                onClick={() => { setLang('en'); setLangOpen(false); }}
+                className="w-full text-left px-4 py-2 font-body text-[0.85rem] text-[#2C1810] hover:bg-[#B85C38]/10 hover:text-[#B85C38] transition-colors outline-none"
               >
                 English
               </button>
               <button 
-                onClick={() => setLang('it')}
-                className="w-full text-left px-4 py-2 font-body text-[0.85rem] text-[#2C1810] hover:bg-[#B85C38]/10 hover:text-[#B85C38] transition-colors"
+                onClick={() => { setLang('it'); setLangOpen(false); }}
+                className="w-full text-left px-4 py-2 font-body text-[0.85rem] text-[#2C1810] hover:bg-[#B85C38]/10 hover:text-[#B85C38] transition-colors outline-none"
               >
                 Italiano
               </button>
             </div>
           </div>
+
 
           <button 
             className="lg:hidden w-8 h-8 flex flex-col justify-center gap-1.5 focus:outline-none relative z-[1001]"

@@ -13,9 +13,9 @@ const IconicPlaces: React.FC = () => {
   const textContent = (content as any)[lang]?.places || [];
 
   return (
-    <section className="relative py-[var(--space-3xl)] bg-[#FAF3E8] before:content-[''] before:absolute before:top-0 before:inset-x-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#DBBE85] before:to-transparent" id="places">
-      <div className="container mx-auto px-14 max-w-[1440px]">
-        <div className="section-header text-center mb-[var(--space-3xl)] fade-in">
+    <section className="relative overflow-hidden py-[var(--space-3xl)] bg-[#FAF3E8] before:content-[''] before:absolute before:top-0 before:inset-x-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#DBBE85] before:to-transparent" id="places">
+      <div className="container mx-auto px-4 md:px-14 max-w-[1440px]">
+        <div className="section-header text-center mb-[var(--space-3xl)] fade-in px-4 md:px-0">
           <span className="block font-body font-bold text-[1rem] tracking-[0.25em] uppercase text-[#A8893E] mb-[var(--space-sm)]">
             {t('places_label')}
           </span>
@@ -38,7 +38,7 @@ const IconicPlaces: React.FC = () => {
               };
 
               return (
-                <div key={idx} className="min-w-full p-4">
+                <div key={idx} className="min-w-full p-2 md:p-4">
                   <div className="relative group overflow-hidden rounded-[32px] shadow-[0_20px_60px_rgba(44,24,16,0.18)] h-[680px]">
                     <img 
                       src={imageUrl} 

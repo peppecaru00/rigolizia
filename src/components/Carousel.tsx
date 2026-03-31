@@ -83,18 +83,18 @@ const Carousel: React.FC<CarouselProps> = ({
 
       <button 
         onClick={() => prev(true)} 
-        className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-lg transition-all hover:scale-110 active:scale-95 border border-black/5"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/90 backdrop-blur-md hidden md:flex items-center justify-center shadow-lg transition-all hover:scale-110 active:scale-95 border border-black/5"
         aria-label="Previous"
       >
-        <ChevronLeft className="w-6 h-6 stroke-[2.5px] text-primary" />
+        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 stroke-[2.5px] text-primary" />
       </button>
 
       <button 
         onClick={() => next(true)} 
-        className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-lg transition-all hover:scale-110 active:scale-95 border border-black/5"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/90 backdrop-blur-md hidden md:flex items-center justify-center shadow-lg transition-all hover:scale-110 active:scale-95 border border-black/5"
         aria-label="Next"
       >
-        <ChevronRight className="w-6 h-6 stroke-[2.5px] text-primary" />
+        <ChevronRight className="w-5 h-5 md:w-6 md:h-6 stroke-[2.5px] text-primary" />
       </button>
 
       <div className="flex justify-center gap-2 mt-8">
