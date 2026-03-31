@@ -31,13 +31,15 @@ function initFadeAnimations(): void {
   fadeElements.forEach((el) => observer.observe(el));
 }
 
-// ── Navbar scroll effect ──
+// ── Navbar & Mobile Menu ──
 function initNavbar(): void {
   const nav = document.getElementById('main-nav');
-  if (!nav) return;
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (!nav || !navToggle || !navLinks) return;
 
+  // Scroll effect
   let ticking = false;
-
   window.addEventListener('scroll', () => {
     if (!ticking) {
       window.requestAnimationFrame(() => {
@@ -51,6 +53,20 @@ function initNavbar(): void {
       ticking = true;
     }
   });
+
+  // Mobile menu toggle
+  navToggle.addEventListener('click', () => {
+    nav.classList.toggle('nav-active');
+    document.body.classList.toggle('no-scroll');
+  });
+
+  // Close menu on link click
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('nav-active');
+      document.body.classList.remove('no-scroll');
+    });
+  });
 }
 
 // ── Floating image parallax on scroll ──
@@ -59,6 +75,11 @@ function initParallax(): void {
   if (!layers.length) return;
 
   const updateParallax = () => {
+    // Only run if the first layer is actually visible (not hidden via CSS on mobile)
+    if (layers[0] && getComputedStyle(layers[0]).display === 'none') {
+      return;
+    }
+    
     const scrollY = window.scrollY;
     
     layers.forEach((layer, index) => {

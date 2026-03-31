@@ -23,36 +23,47 @@
         <li><a href="#community">Community</a></li>
         <li><a href="#visit">Visit</a></li>
       </ul>
+      <!-- Mobile Menu Toggle -->
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
 
   <!-- ── Hero Section ── -->
   <section class="hero" id="hero">
-    <!-- Floating Images -->
+    <!-- Floating Parallax Gems (Desktop) -->
     <div class="floating-images" id="floating-images">
       <div class="parallax-layer">
-        <div class="floating-img float-drift">
+        <div class="gem-card float-drift">
           <img src="./images/hero-village.png" alt="Rigolizia village view" loading="eager" />
+          <span>The Village</span>
         </div>
       </div>
       <div class="parallax-layer">
-        <div class="floating-img float-drift-reverse">
-          <img src="./images/hero-church.png" alt="Historic church in Rigolizia" loading="eager" />
+        <div class="gem-card float-drift-reverse">
+          <img src="./images/hero-church.png" alt="Historic church" loading="eager" />
+          <span>The Church</span>
         </div>
       </div>
       <div class="parallax-layer">
-        <div class="floating-img float-drift-slow">
-          <img src="./images/hero-countryside.png" alt="Sicilian countryside near Rigolizia" loading="eager" />
+        <div class="gem-card float-drift-slow">
+          <img src="./images/hero-countryside.png" alt="Sicilian countryside" loading="eager" />
+          <span>The Hills</span>
         </div>
       </div>
       <div class="parallax-layer">
-        <div class="floating-img float-drift">
+        <div class="gem-card float-drift">
           <img src="./images/hero-arancini.png" alt="Traditional Sicilian arancini" loading="lazy" />
+          <span>Sicilian Flavors</span>
         </div>
       </div>
       <div class="parallax-layer">
-        <div class="floating-img float-drift-reverse">
-          <img src="./images/hero-olive.png" alt="Olive branch from Rigolizia" loading="lazy" />
+        <div class="gem-card float-drift-reverse">
+          <img src="./images/hero-olive.png" alt="Olive branch" loading="lazy" />
+          <span>Nature</span>
         </div>
       </div>
     </div>
@@ -62,6 +73,31 @@
       <h1>Welcome to<br>Rigolizia</h1>
       <div class="hero-divider"></div>
       <p class="subtitle">A hidden gem in the sun-drenched hills of Noto, Sicily</p>
+      
+      <!-- Mobile Filmstrip Gallery (Only visible on small screens) -->
+      <div class="hero-mobile-gallery" id="hero-mobile-gallery">
+        <div class="gem-card">
+          <img src="./images/hero-village.png" alt="Rigolizia village view" />
+          <span>The Village</span>
+        </div>
+        <div class="gem-card">
+          <img src="./images/hero-church.png" alt="Historic church" />
+          <span>The Church</span>
+        </div>
+        <div class="gem-card">
+          <img src="./images/hero-countryside.png" alt="Sicilian hills" />
+          <span>The Hills</span>
+        </div>
+        <div class="gem-card">
+          <img src="./images/hero-arancini.png" alt="Traditional food" />
+          <span>Flavors</span>
+        </div>
+        <div class="gem-card">
+          <img src="./images/hero-olive.png" alt="Olive branch" />
+          <span>Nature</span>
+        </div>
+      </div>
+
       <div class="scroll-hint">
         <span>Explore</span>
         <div class="scroll-arrow"></div>

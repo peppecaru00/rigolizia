@@ -228,6 +228,53 @@ section {
   width: 100%;
 }
 
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  padding: 0;
+}
+
+.nav-toggle span {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.3s var(--ease-out);
+}
+
+.nav-toggle span:nth-child(1) { top: 8px; }
+.nav-toggle span:nth-child(2) { top: 16px; }
+.nav-toggle span:nth-child(3) { top: 24px; }
+
+/* Hamburger Animation (When Active) */
+.nav-active .nav-toggle span:nth-child(1) {
+  top: 16px;
+  transform: rotate(45deg);
+}
+
+.nav-active .nav-toggle span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.nav-active .nav-toggle span:nth-child(3) {
+  top: 16px;
+  transform: rotate(-45deg);
+}
+
+/* Helper Class to prevent scrolling when menu is open */
+body.no-scroll {
+  overflow: hidden;
+}
+
 /* ── Hero Section ── */
 .hero {
   position: relative;
@@ -305,20 +352,43 @@ section {
   will-change: transform;
 }
 
-.floating-img {
+.gem-card {
   position: absolute;
-  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  padding: 12px;
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-float);
-  overflow: hidden; /* This now correctly clips the IMG inside the drift DIV */
   opacity: 0.85;
   animation: floatIn 1.2s var(--ease-out) forwards;
   will-change: transform;
+  pointer-events: auto;
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
 }
 
-.floating-img img {
+.gem-card:hover {
+  transform: scale(1.05) rotate(0deg) !important;
+  box-shadow: var(--shadow-hover);
+  z-index: 10;
+}
+
+.gem-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+.gem-card span {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
 }
 
 @keyframes floatIn {
@@ -331,49 +401,48 @@ section {
   }
 }
 
-/* Position the layers (previously these were on .floating-img) */
-.parallax-layer:nth-child(1) .floating-img {
-  width: clamp(180px, 22vw, 320px);
-  height: clamp(240px, 28vw, 400px);
+/* Desktop sizing and staggered rotations */
+.parallax-layer:nth-child(1) .gem-card {
+  width: 320px;
+  height: 400px;
   top: 8%;
   left: 4%;
   transform: rotate(-4deg);
 }
 
-.parallax-layer:nth-child(2) .floating-img {
-  width: clamp(160px, 18vw, 260px);
-  height: clamp(200px, 22vw, 320px);
+.parallax-layer:nth-child(2) .gem-card {
+  width: 260px;
+  height: 320px;
   top: 12%;
   right: 5%;
   transform: rotate(3deg);
 }
 
-.parallax-layer:nth-child(3) .floating-img {
-  width: clamp(140px, 16vw, 240px);
-  height: clamp(180px, 20vw, 280px);
+.parallax-layer:nth-child(3) .gem-card {
+  width: 240px;
+  height: 280px;
   bottom: 10%;
   left: 8%;
   transform: rotate(2deg);
 }
 
-.parallax-layer:nth-child(4) .floating-img {
-  width: clamp(100px, 12vw, 180px);
-  height: clamp(100px, 12vw, 180px);
+.parallax-layer:nth-child(4) .gem-card {
+  width: 180px;
+  height: 180px;
   top: 15%;
   left: 45%;
   transform: rotate(8deg);
-  border-radius: 50%;
 }
 
-.parallax-layer:nth-child(5) .floating-img {
-  width: clamp(120px, 14vw, 200px);
-  height: clamp(160px, 18vw, 240px);
+.parallax-layer:nth-child(5) .gem-card {
+  width: 200px;
+  height: 240px;
   bottom: 15%;
   right: 10%;
   transform: rotate(-6deg);
 }
 
-/* Gentle floating animation applied to the floating-img div */
+/* Gentle floating animation applied to the gem-card div */
 .float-drift {
   animation: drift 8s ease-in-out infinite alternate;
 }
@@ -399,6 +468,36 @@ section {
 @keyframes driftSlow {
   0% { transform: rotate(2deg) scale(1); }
   100% { transform: rotate(0deg) scale(1.05); }
+}
+
+/* Mobile Gallery (Filmstrip specifically for mobile) */
+.hero-mobile-gallery {
+  display: none;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-md);
+  margin: var(--space-lg) calc(var(--space-md) * -1) 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.hero-mobile-gallery .gem-card {
+  position: relative;
+  min-width: 150px;
+  height: auto;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  opacity: 1;
+  animation: none;
+  transform: none !important;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+}
+
+.hero-mobile-gallery .gem-card img {
+  height: 120px;
 }
 
 /* Scroll hint */
@@ -774,19 +873,54 @@ section {
 }
 
 /* ── Responsive ── */
+/* Mobile Gallery (Mainly for mobile, hidden on desktop) */
+.hero-mobile-gallery {
+  display: none;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-md);
+  margin: var(--space-lg) calc(var(--space-md) * -1) 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Hide scrollbar Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
+}
+
+.hero-mobile-gallery::-webkit-scrollbar {
+  display: none; /* Hide scrollbar Chrome/Safari */
+}
+
+.mobile-gallery-card {
+  min-width: 140px;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  background: var(--bg-card);
+  padding: 8px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.mobile-gallery-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+}
+
+.mobile-gallery-card span {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+/* ── Responsive ── */
 @media (max-width: 1024px) {
-  .floating-img:nth-child(1) {
-    width: clamp(140px, 20vw, 220px);
-    height: clamp(180px, 24vw, 280px);
-  }
-  .floating-img:nth-child(2) {
-    width: clamp(120px, 16vw, 180px);
-    height: clamp(160px, 20vw, 240px);
-  }
-  .floating-img:nth-child(3) {
-    width: clamp(100px, 14vw, 160px);
-    height: clamp(130px, 18vw, 200px);
-  }
+  .parallax-layer:nth-child(1) .gem-card { width: 240px; height: 300px; }
+  .parallax-layer:nth-child(2) .gem-card { width: 200px; height: 260px; }
+  .parallax-layer:nth-child(3) .gem-card { width: 180px; height: 220px; }
 
   .carousel-slide img {
     height: 400px;
@@ -806,27 +940,49 @@ section {
     padding: var(--space-2xl) 0;
   }
 
+  .nav-toggle {
+    display: block;
+  }
+
   .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 280px;
+    background: var(--bg-cream);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-xl);
+    padding: var(--space-3xl) var(--space-lg);
+    box-shadow: -10px 0 30px rgba(44, 24, 16, 0.1);
+    transform: translateX(100%);
+    transition: transform 0.4s var(--ease-in-out);
+    z-index: 999;
+  }
+
+  .nav-active .nav-links {
+    transform: translateX(0);
+  }
+
+  /* Hide parallax layers on mobile */
+  .parallax-layer {
     display: none;
   }
 
-  .floating-img:nth-child(1) {
-    width: 140px;
-    height: 180px;
-    top: 5%;
-    left: 2%;
+  .hero {
+    background: linear-gradient(to bottom, rgba(255, 249, 240, 0.8), rgba(255, 249, 240, 0.95)), 
+                url('./images/hero-village.png') center/cover no-repeat;
   }
-  .floating-img:nth-child(2) {
-    width: 120px;
-    height: 160px;
-    top: 5%;
-    right: 2%;
+
+  .hero-mobile-gallery {
+    display: flex;
   }
-  .floating-img:nth-child(3) {
-    width: 110px;
-    height: 140px;
-    bottom: 15%;
-    left: 3%;
+
+  .hero h1 {
+    font-size: 3.2rem;
+    line-height: 1.1;
   }
 
   .carousel-slide img {
@@ -838,7 +994,7 @@ section {
   }
 
   .fb-embed-card {
-    min-width: 85%;
+    min-width: 90%;
   }
 
   .footer-content {
@@ -848,16 +1004,17 @@ section {
 }
 
 @media (max-width: 480px) {
-  .floating-img:nth-child(1) {
-    width: 110px;
-    height: 140px;
+  .hero h1 {
+    font-size: 2.6rem;
   }
-  .floating-img:nth-child(2) {
-    width: 90px;
-    height: 120px;
+  
+  .hero .subtitle {
+    font-size: 1rem;
+    padding: 0 var(--space-md);
   }
-  .floating-img:nth-child(3) {
-    display: none;
+
+  .hero-mobile-gallery .gem-card {
+    min-width: 120px;
   }
 
   .carousel-slide img {
