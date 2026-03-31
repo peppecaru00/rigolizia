@@ -85,7 +85,7 @@ const Gallery: React.FC = () => {
           {activeImages.map((src: string, idx: number) => (
             <div
               key={src}
-              className="break-inside-avoid relative group rounded-2xl overflow-hidden bg-[#E8E0D5] shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
+              className="break-inside-avoid relative group rounded-xl overflow-hidden bg-[#E8E0D5] shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
             >
               <img
                 src={src}

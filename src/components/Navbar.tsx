@@ -124,14 +124,14 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Drawer */}
       <div className={cn(
-        "fixed inset-0 top-0 left-0 bg-[#FFF9F0] pointer-events-none opacity-0 translate-x-full transition-all duration-500 ease-in-out z-[90] flex flex-col items-center justify-center gap-12 p-12 lg:hidden",
+        "fixed top-0 left-0 w-full h-[100dvh] bg-[#FFF9F0] pointer-events-none opacity-0 translate-x-full transition-all duration-500 ease-in-out z-[90] flex flex-col items-center justify-center gap-8 p-6 lg:hidden overflow-y-auto",
         mobileActive && "opacity-100 translate-x-0 pointer-events-auto"
       )}>
         {navLinks.map(link => (
           <Link 
             key={link.href}
             to={link.href}
-            className="text-[2.2rem] font-body font-bold uppercase tracking-[0.12em] text-[#2C1810] hover:text-[#B85C38] transition-all duration-300"
+            className="text-[1.8rem] sm:text-[2.2rem] font-body font-bold uppercase tracking-[0.12em] text-[#2C1810] hover:text-[#B85C38] transition-all duration-300"
             onClick={() => {
               setMobileActive(false);
               document.body.classList.remove('no-scroll');
