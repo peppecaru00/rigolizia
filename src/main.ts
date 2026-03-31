@@ -58,21 +58,25 @@ function initParallax(): void {
   const floatingImages = document.querySelectorAll<HTMLElement>('.floating-img');
   if (!floatingImages.length) return;
 
-  let ticking = false;
+  const updateParallax = () => {
+    const scrollY = window.scrollY;
+    floatingImages.forEach((img, index) => {
+      const speed = 0.05 + (index * 0.03);
+      const yOffset = scrollY * speed;
+      const rotations = [-4, 3, 2, 8, -6];
+      const rotation = rotations[index % rotations.length];
+      img.style.transform = `translateY(-${yOffset}px) rotate(${rotation}deg)`;
+    });
+  };
 
+  // Initial call to set positions
+  updateParallax();
+
+  let ticking = false;
   window.addEventListener('scroll', () => {
     if (!ticking) {
       window.requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        floatingImages.forEach((img, index) => {
-          const speed = 0.05 + (index * 0.03);
-          const yOffset = scrollY * speed;
-          // Get the initial rotation from a data attribute or predefined map
-          // For simplicity, we'll just alternate or use a fixed set of rotations
-          const rotations = [-4, 3, 2, 8, -6];
-          const rotation = rotations[index % rotations.length];
-          img.style.transform = `translateY(-${yOffset}px) rotate(${rotation}deg)`;
-        });
+        updateParallax();
         ticking = false;
       });
       ticking = true;
