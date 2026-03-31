@@ -258,33 +258,36 @@ class Carousel {
   }
 
   init() {
-    this.prevBtn?.addEventListener('click', () => this.prev());
-    this.nextBtn?.addEventListener('click', () => this.next());
+    this.prevBtn?.addEventListener('click', () => this.prev(true));
+    this.nextBtn?.addEventListener('click', () => this.next(true));
     this.dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => this.goTo(index));
+      dot.addEventListener('click', () => this.goTo(index, true));
     });
 
     let startX = 0;
     this.container.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
     this.container.addEventListener('touchend', (e) => {
       const diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) diff > 0 ? this.next() : this.prev();
+      if (Math.abs(diff) > 50) diff > 0 ? this.next(true) : this.prev(true);
     }, { passive: true });
 
     if (this.container.id === 'places-carousel') this.startAutoplay();
   }
 
-  goTo(index: number) {
+  goTo(index: number, isManual: boolean = false) {
+    if (isManual) this.resetAutoplay();
     this.currentIndex = index;
     this.update();
   }
 
-  next() {
+  next(isManual: boolean = false) {
+    if (isManual) this.resetAutoplay();
     this.currentIndex = (this.currentIndex + 1) % this.slides.length;
     this.update();
   }
 
-  prev() {
+  prev(isManual: boolean = false) {
+    if (isManual) this.resetAutoplay();
     this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
     this.update();
   }
@@ -292,13 +295,31 @@ class Carousel {
   update() {
     if (!this.slides.length) return;
     const slideWidth = this.slides[0].offsetWidth;
-    const gap = this.container.id === 'fb-carousel' ? 32 : 0;
+    
+    // Dynamically detect gap from CSS
+    const style = window.getComputedStyle(this.track);
+    const gap = parseFloat(style.gap) || 0;
+    
     this.track.style.transform = `translateX(-${this.currentIndex * (slideWidth + gap)}px)`;
     this.dots.forEach((dot, i) => dot.classList.toggle('active', i === this.currentIndex));
   }
 
   startAutoplay() {
-    this.autoplayInterval = setInterval(() => this.next(), 6000);
+    this.stopAutoplay();
+    this.autoplayInterval = setInterval(() => this.next(false), 7000) as unknown as number;
+  }
+
+  stopAutoplay() {
+    if (this.autoplayInterval) {
+      clearInterval(this.autoplayInterval);
+      this.autoplayInterval = null;
+    }
+  }
+
+  resetAutoplay() {
+    if (this.container.id === 'places-carousel') {
+      this.startAutoplay();
+    }
   }
 }
 

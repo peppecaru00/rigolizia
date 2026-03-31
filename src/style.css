@@ -39,14 +39,14 @@
   --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-body: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  /* Spacing */
-  --space-xs: 0.5rem;
-  --space-sm: 1rem;
-  --space-md: 1.5rem;
-  --space-lg: 2.5rem;
-  --space-xl: 4rem;
-  --space-2xl: 6rem;
-  --space-3xl: 8rem;
+  /* Spacing - Beefier Scale */
+  --space-xs: 0.75rem;
+  --space-sm: 1.25rem;
+  --space-md: 2rem;
+  --space-lg: 3.5rem;
+  --space-xl: 5rem;
+  --space-2xl: 8rem;
+  --space-3xl: 10rem;
 
   /* Transitions */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -80,8 +80,8 @@ html {
 body {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 1.1rem; /* Slightly larger for beefier feel */
+  line-height: 1.8;
   color: var(--text-primary);
   background-color: var(--bg-cream);
   overflow-x: hidden;
@@ -120,12 +120,14 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  letter-spacing: -0.01em;
+  font-size: clamp(3.2rem, 6vw, 5.5rem);
+  letter-spacing: -0.015em;
+  margin-bottom: var(--space-md);
 }
 
 h3 {
-  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  margin-bottom: var(--space-sm);
 }
 
 p {
@@ -135,7 +137,7 @@ p {
 .subtitle {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
   color: var(--text-secondary);
   letter-spacing: 0.02em;
 }
@@ -153,9 +155,9 @@ p {
 /* ── Layout ── */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1440px; /* Expanded for beefier monitors */
   margin: 0 auto;
-  padding: 0 var(--space-md);
+  padding: 0 var(--space-lg);
 }
 
 section {
@@ -390,14 +392,14 @@ body.no-scroll {
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transition: opacity 2s ease-in-out;
-  transform: scale(1.1); /* Slight zoom for extra cinematic feel */
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out; /* Smooth everything */
+  transform: scale(1.1);
 }
 
 .hero-slide.active {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 2s ease-in-out, transform 10s ease-out;
+  transition: opacity 2s ease-in-out, transform 10s ease-out; /* Long zoom while active */
 }
 
 .hero-overlay {
@@ -651,15 +653,19 @@ body.no-scroll {
 
 .section-header {
   text-align: center;
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-3xl); /* Increased for editorial feel */
 }
 
 .section-header h2 {
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
+  font-size: clamp(2.5rem, 5vw, 4rem);
 }
 
 .section-header .subtitle {
   margin: 0 auto;
+  max-width: 65ch;
+  font-size: 1.15rem;
+  color: var(--text-secondary);
 }
 
 /* ── Carousel ── */
@@ -671,7 +677,8 @@ body.no-scroll {
 
 .carousel-track {
   display: flex;
-  transition: transform 0.6s var(--ease-in-out);
+  gap: 2rem; /* The new gap */
+  transition: transform 0.8s var(--ease-in-out);
 }
 
 .carousel-slide {
@@ -681,7 +688,7 @@ body.no-scroll {
 
 .carousel-slide img {
   width: 100%;
-  height: 520px;
+  height: 680px; /* Beefier photo height */
   object-fit: cover;
   border-radius: var(--radius-xl);
 }
@@ -713,42 +720,59 @@ body.no-scroll {
 /* Carousel Navigation */
 .carousel-nav {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-md);
-  margin-top: var(--space-lg);
+  margin-top: var(--space-2xl); /* More space below photography */
 }
 
 .carousel-btn {
-  width: 48px;
-  height: 48px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  border: 1.5px solid var(--border-light);
-  background: var(--bg-card);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-fast);
-  box-shadow: var(--shadow-soft);
+  transition: all var(--transition-medium);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.carousel-btn.prev {
+  left: var(--space-md);
+}
+
+.carousel-btn.next {
+  right: var(--space-md);
 }
 
 .carousel-btn:hover {
-  background: var(--color-primary);
+  background: #fff;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-medium);
 }
 
 .carousel-btn:hover svg {
-  stroke: #fff;
+  stroke: var(--color-primary);
 }
 
 .carousel-btn svg {
-  width: 18px;
-  height: 18px;
-  stroke: var(--text-secondary);
-  stroke-width: 2;
+  width: 24px;
+  height: 24px;
+  stroke: var(--text-primary);
+  stroke-width: 2.5;
   fill: none;
+  transition: stroke var(--transition-fast);
 }
 
 .carousel-dots {
@@ -799,8 +823,8 @@ body.no-scroll {
 
 .fb-carousel-track {
   display: flex;
-  gap: var(--space-lg);
-  transition: transform 0.6s var(--ease-in-out);
+  gap: 2rem; /* Matched gap */
+  transition: transform 0.8s var(--ease-in-out);
 }
 
 .fb-embed-card {
