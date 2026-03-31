@@ -82,39 +82,44 @@ function initDynamicContent(): void {
 
 /**
  * ── Hero Background Carousel ──
- * Switches between beautiful wide shots of Rigolizia
+ * Dynamically picks EVERY image from the hero folder
  */
-function initHeroCarousel(): void {
+async function initHeroCarousel(): Promise<void> {
   const container = document.getElementById('hero-carousel');
   if (!container) return;
 
-  const images = [
-    './images/hero-village.png',
-    './images/hero-countryside.png',
-    './images/hero-church.png',
-    './images/carousel-sunset.png'
-  ];
+  try {
+    const response = await fetch('./images/hero/hero_manifest.json');
+    if (!response.ok) throw new Error('Could not load hero manifest');
+    const filenames: string[] = await response.json();
+    
+    // Map to full paths
+    const images = filenames.map(f => `./images/hero/${f}`);
 
-  // Clear and Create slides
-  container.innerHTML = '';
-  const slides: HTMLElement[] = [];
+    // Clear and Create slides
+    container.innerHTML = '';
+    const slides: HTMLElement[] = [];
 
-  images.forEach((src, idx) => {
-    const div = document.createElement('div');
-    div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
-    div.style.backgroundImage = `url('${src}')`;
-    container.appendChild(div);
-    slides.push(div);
-  });
+    images.forEach((src, idx) => {
+      const div = document.createElement('div');
+      div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
+      div.style.backgroundImage = `url('${src}')`;
+      container.appendChild(div);
+      slides.push(div);
+    });
 
-  let currentIdx = 0;
-  if (heroInterval) clearInterval(heroInterval);
+    let currentIdx = 0;
+    if (heroInterval) clearInterval(heroInterval);
 
-  heroInterval = setInterval(() => {
-    slides[currentIdx].classList.remove('active');
-    currentIdx = (currentIdx + 1) % slides.length;
-    slides[currentIdx].classList.add('active');
-  }, 8000) as unknown as number;
+    heroInterval = setInterval(() => {
+      if (slides.length < 2) return;
+      slides[currentIdx].classList.remove('active');
+      currentIdx = (currentIdx + 1) % slides.length;
+      slides[currentIdx].classList.add('active');
+    }, 8000) as unknown as number;
+  } catch (err) {
+    console.error("Hero Carousel Error:", err);
+  }
 }
 
 function renderIconicPlaces(): void {
