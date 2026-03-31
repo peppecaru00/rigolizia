@@ -60,12 +60,21 @@ function initParallax(): void {
 
   const updateParallax = () => {
     const scrollY = window.scrollY;
+    
     floatingImages.forEach((img, index) => {
-      const speed = 0.05 + (index * 0.03);
-      const yOffset = scrollY * speed;
+      // Varied vertical speeds: some fast, some slow
+      const speedsY = [0.12, 0.22, 0.08, 0.18, 0.28];
+      // Slight horizontal shifts for a "drifting" feel
+      const speedsX = [0.03, -0.04, 0.02, -0.02, 0.05];
+      
+      const yOffset = scrollY * (speedsY[index % speedsY.length] || 0.1);
+      const xOffset = scrollY * (speedsX[index % speedsX.length] || 0.05);
+      
       const rotations = [-4, 3, 2, 8, -6];
       const rotation = rotations[index % rotations.length];
-      img.style.transform = `translateY(-${yOffset}px) rotate(${rotation}deg)`;
+      
+      // Combine scroll-based position with its characteristic rotation
+      img.style.transform = `translate3d(${xOffset}px, -${yOffset}px, 0) rotate(${rotation}deg)`;
     });
   };
 
