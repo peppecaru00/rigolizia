@@ -340,6 +340,25 @@ section {
   transform: rotate(2deg);
 }
 
+.floating-img:nth-child(4) {
+  width: clamp(100px, 12vw, 180px);
+  height: clamp(100px, 12vw, 180px);
+  top: 15%;
+  left: 45%;
+  animation-delay: 1.2s;
+  transform: rotate(8deg);
+  border-radius: 50%; /* Circle for arancini */
+}
+
+.floating-img:nth-child(5) {
+  width: clamp(120px, 14vw, 200px);
+  height: clamp(160px, 18vw, 240px);
+  bottom: 15%;
+  right: 10%;
+  animation-delay: 1.5s;
+  transform: rotate(-6deg);
+}
+
 @keyframes floatIn {
   to {
     opacity: 0.85;

@@ -65,9 +65,13 @@ function initParallax(): void {
       window.requestAnimationFrame(() => {
         const scrollY = window.scrollY;
         floatingImages.forEach((img, index) => {
-          const speed = 0.08 + index * 0.04;
+          const speed = 0.05 + (index * 0.03);
           const yOffset = scrollY * speed;
-          img.style.transform = `translateY(-${yOffset}px)`;
+          // Get the initial rotation from a data attribute or predefined map
+          // For simplicity, we'll just alternate or use a fixed set of rotations
+          const rotations = [-4, 3, 2, 8, -6];
+          const rotation = rotations[index % rotations.length];
+          img.style.transform = `translateY(-${yOffset}px) rotate(${rotation}deg)`;
         });
         ticking = false;
       });
@@ -106,7 +110,14 @@ class Carousel {
     this.nextBtn = document.getElementById(nextId);
     this.dotsContainer = document.getElementById(dotsId);
 
-    if (!this.track) return;
+    if (!this.track) {
+      this.currentIndex = 0;
+      this.totalSlides = 0;
+      this.autoplayInterval = interval;
+      this.autoplayTimer = null;
+      this.isAutoplay = autoplay;
+      return;
+    }
 
     this.currentIndex = 0;
     this.totalSlides = this.track.children.length;
@@ -233,8 +244,8 @@ function initFacebookSDK(): void {
   const fbPosts = document.querySelectorAll('.fb-post');
   if (!fbPosts.length) return;
 
-  (window as Record<string, unknown>).fbAsyncInit = function () {
-    (window as Record<string, unknown> & { FB: { init: (config: object) => void } }).FB.init({
+  (window as unknown as Record<string, unknown>).fbAsyncInit = function () {
+    (window as unknown as Record<string, unknown> & { FB: { init: (config: object) => void } }).FB.init({
       xfbml: true,
       version: 'v19.0',
     });
