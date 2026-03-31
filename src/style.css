@@ -1023,33 +1023,59 @@ body.no-scroll {
 /* ── Responsive ── */
 @media (max-width: 1024px) {
   .carousel-slide img {
-    height: 400px;
+    height: 520px;
+  }
+
+  .fb-feed {
+    gap: var(--space-lg);
   }
 
   .fb-embed-card {
     min-width: calc(50% - var(--space-lg) / 2);
   }
-
-  .footer-content {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 @media (max-width: 768px) {
+  :root {
+    --space-2xl: 5rem;
+    --space-3xl: 7rem;
+  }
+
+  body {
+    font-size: 1.15rem;
+  }
+
+  h1 {
+    font-size: clamp(3.2rem, 12vw, 4.5rem);
+  }
+
+  h2 {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+  }
+
   section {
     padding: var(--space-2xl) 0;
   }
 
-  .nav-toggle {
-    display: block;
+  /* Header mobile toggle */
+  .nav-links {
+    display: none;
+    /* Hide desktop links on mobile */
   }
 
-  .nav-links {
+  .nav-active .nav-links {
+    display: flex;
+    /* Only show in drawer mode */
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
-    width: 280px;
+    width: 80%;
+    max-width: 320px;
     background: var(--bg-cream);
     flex-direction: column;
     justify-content: center;
@@ -1057,34 +1083,45 @@ body.no-scroll {
     gap: var(--space-xl);
     padding: var(--space-3xl) var(--space-lg);
     box-shadow: -10px 0 30px rgba(44, 24, 16, 0.1);
-    transform: translateX(100%);
-    transition: transform 0.4s var(--ease-in-out);
     z-index: 999;
   }
 
-  .nav-active .nav-links {
-    transform: translateX(0);
+  /* Carousel Optimization */
+  .carousel-slide img {
+    height: 460px;
+  }
+
+  .carousel-btn {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  .carousel-btn.prev {
+    left: 10px;
+  }
+
+  .carousel-btn.next {
+    right: 10px;
+  }
+
+  /* Grid Stacking */
+  .fb-feed {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: var(--space-xl);
+  }
+
+  .footer-links {
+    justify-content: center;
   }
 
   .hero-content {
-    padding: 0 8% 12%;
-  }
-
-  .hero-main {
-    font-size: 4rem;
-  }
-
-  .hero-pre {
-    font-size: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-main {
-    font-size: 3rem;
-  }
-
-  .hero-content {
-    padding-bottom: 20%;
+    padding: 0 6% 15%;
   }
 }
