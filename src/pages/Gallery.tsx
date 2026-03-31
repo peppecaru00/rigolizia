@@ -7,16 +7,16 @@ import { cn } from '../lib/utils';
 
 const getCategoryDisplayName = (cat: string, lang: string) => {
   if (cat === 'All') return lang === 'it' ? 'Tutte' : 'All';
-  
+
   const parts = cat.split('-');
   let displayName = cat;
-  
+
   if (parts.length >= 2) {
     displayName = lang === 'it' ? parts[0] : parts[1];
   } else {
     displayName = parts[0];
   }
-  
+
   displayName = displayName.replace(/[_-]/g, ' ');
   return displayName.charAt(0).toUpperCase() + displayName.slice(1);
 };
@@ -31,7 +31,7 @@ const Gallery: React.FC = () => {
     if (b === 'All') return 1;
     return a.localeCompare(b);
   });
-  
+
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const activeImages = categoryMap[activeCategory] || [];
 
@@ -64,8 +64,8 @@ const Gallery: React.FC = () => {
               onClick={() => setActiveCategory(cat)}
               className={cn(
                 "px-6 py-2.5 rounded-full font-body font-bold uppercase tracking-widest text-[0.75rem] transition-all duration-300 border backdrop-blur-sm",
-                activeCategory === cat 
-                  ? "bg-[#2C1810] text-[#FFF9F0] border-[#2C1810] shadow-md -translate-y-[1px]" 
+                activeCategory === cat
+                  ? "bg-[#2C1810] text-[#FFF9F0] border-[#2C1810] shadow-md -translate-y-[1px]"
                   : "bg-transparent text-[#5A4636] border-[#2C1810]/15 hover:border-[#B85C38] hover:text-[#B85C38] hover:bg-[#B85C38]/5"
               )}
             >
@@ -85,7 +85,7 @@ const Gallery: React.FC = () => {
           {activeImages.map((src: string, idx: number) => (
             <div
               key={src}
-              className="break-inside-avoid relative group rounded-xl overflow-hidden bg-[#E8E0D5] shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
+              className="break-inside-avoid relative group rounded-2xl overflow-hidden bg-[#E8E0D5] shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
             >
               <img
                 src={src}

@@ -8,9 +8,9 @@ const Community: React.FC = () => {
   const facebookPosts = communityContent.facebookPosts || [];
 
   return (
-    <section className="py-[var(--space-3xl)] bg-[#FFF9F0] overflow-hidden" id="community">
+    <section className="py-[var(--space-xl)] bg-[#FFF9F0] overflow-hidden" id="community">
       <div className="container mx-auto px-4 md:px-14 max-w-[1440px]">
-        <div className="section-header text-center mb-[var(--space-3xl)] fade-in px-4 md:px-0">
+        <div className="section-header text-center mb-[var(--space-xl)] fade-in px-4 md:px-0">
           <span className="block font-body font-bold text-[1rem] tracking-[0.25em] uppercase text-[#A8893E] mb-[var(--space-sm)]">
             {t('community_label')}
           </span>

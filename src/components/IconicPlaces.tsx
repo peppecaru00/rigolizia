@@ -13,9 +13,9 @@ const IconicPlaces: React.FC = () => {
   const textContent = (content as any)[lang]?.places || [];
 
   return (
-    <section className="relative overflow-hidden py-[var(--space-3xl)] bg-[#FAF3E8] before:content-[''] before:absolute before:top-0 before:inset-x-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#DBBE85] before:to-transparent" id="places">
+    <section className="relative overflow-hidden py-[var(--space-xl)] bg-[#FAF3E8] before:content-[''] before:absolute before:top-0 before:inset-x-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#DBBE85] before:to-transparent" id="places">
       <div className="container mx-auto px-4 md:px-14 max-w-[1440px]">
-        <div className="section-header text-center mb-[var(--space-3xl)] fade-in px-4 md:px-0">
+        <div className="section-header text-center mb-[var(--space-xl)] fade-in px-4 md:px-0">
           <span className="block font-body font-bold text-[1rem] tracking-[0.25em] uppercase text-[#A8893E] mb-[var(--space-sm)]">
             {t('places_label')}
           </span>
