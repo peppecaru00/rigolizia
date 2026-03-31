@@ -1,0 +1,38 @@
+{
+  "en": {
+    "nav_places": "Places",
+    "nav_community": "Community",
+    "nav_visit": "Visit",
+    "hero_title": "Welcome to<br>Rigolizia",
+    "hero_subtitle": "A hidden gem in the sun-drenched hills of Noto, Sicily",
+    "hero_explore": "Explore",
+    "places_label": "Discover",
+    "places_title": "Iconic Places",
+    "places_subtitle": "From ancient stone streets to breathtaking panoramas, every corner tells a story",
+    "community_label": "Community",
+    "community_title": "From Our Community",
+    "community_subtitle": "Follow what's happening in Rigolizia through our Facebook page",
+    "footer_description": "A small hamlet in the municipality of Noto, in the province of Syracuse, Sicily. Nestled among olive groves and golden wheat fields, Rigolizia offers an authentic glimpse into timeless Sicilian life.",
+    "footer_explore": "Explore",
+    "footer_connect": "Connect",
+    "footer_heart": "Made with <span class=\"heart\">♥</span> in Sicily · &copy; 2026 Rigolizia"
+  },
+  "it": {
+    "nav_places": "Luoghi",
+    "nav_community": "Comunità",
+    "nav_visit": "Visita",
+    "hero_title": "Benvenuti a<br>Rigolizia",
+    "hero_subtitle": "Un gioiello nascosto tra le colline assolate di Noto, Sicilia",
+    "hero_explore": "Esplora",
+    "places_label": "Scopri",
+    "places_title": "Luoghi Iconici",
+    "places_subtitle": "Dalle antiche strade in pietra ai panorami mozzafiato, ogni angolo racconta una storia",
+    "community_label": "Comunità",
+    "community_title": "Dalla Nostra Comunità",
+    "community_subtitle": "Segui cosa succede a Rigolizia attraverso la nostra pagina Facebook",
+    "footer_description": "Una piccola frazione del comune di Noto, in provincia di Siracusa, Sicilia. Immersa tra uliveti e campi di grano dorati, Rigolizia offre uno scorcio autentico della vita siciliana senza tempo.",
+    "footer_explore": "Esplora",
+    "footer_connect": "Contatti",
+    "footer_heart": "Fatto con <span class=\"heart\">♥</span> in Sicilia · &copy; 2026 Rigolizia"
+  }
+}

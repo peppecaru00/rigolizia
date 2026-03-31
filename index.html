@@ -18,17 +18,33 @@
   <nav class="nav" id="main-nav">
     <div class="container">
       <a href="#" class="nav-logo">Rigolizia</a>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="#places">Places</a></li>
-        <li><a href="#community">Community</a></li>
-        <li><a href="#visit">Visit</a></li>
-      </ul>
-      <!-- Mobile Menu Toggle -->
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      
+      <div class="nav-right">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#places" data-i18n="nav_places">Places</a></li>
+          <li><a href="#community" data-i18n="nav_community">Community</a></li>
+          <li><a href="#visit" data-i18n="nav_visit">Visit</a></li>
+        </ul>
+
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+          <button id="lang-toggle" class="lang-btn" aria-label="Switch language">
+            <span class="lang-current">EN</span>
+            <svg class="lang-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+          <div class="lang-dropdown">
+            <button data-lang="en">English</button>
+            <button data-lang="it">Italiano</button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -39,15 +55,15 @@
 
     <!-- Hero Content -->
     <div class="hero-content">
-      <h1>Welcome to<br>Rigolizia</h1>
+      <h1 data-i18n="hero_title">Welcome to<br>Rigolizia</h1>
       <div class="hero-divider"></div>
-      <p class="subtitle">A hidden gem in the sun-drenched hills of Noto, Sicily</p>
+      <p class="subtitle" data-i18n="hero_subtitle">A hidden gem in the sun-drenched hills of Noto, Sicily</p>
       
       <!-- Mobile Filmstrip Gallery - Populated by main.ts -->
       <div class="hero-mobile-gallery" id="hero-mobile-gallery"></div>
 
       <div class="scroll-hint">
-        <span>Explore</span>
+        <span data-i18n="hero_explore">Explore</span>
         <div class="scroll-arrow"></div>
       </div>
     </div>
@@ -57,9 +73,9 @@
   <section class="places-section" id="places">
     <div class="container">
       <div class="section-header fade-in">
-        <span class="section-label">Discover</span>
-        <h2>Iconic Places</h2>
-        <p class="subtitle">From ancient stone streets to breathtaking panoramas, every corner tells a story</p>
+        <span class="section-label" data-i18n="places_label">Discover</span>
+        <h2 data-i18n="places_title">Iconic Places</h2>
+        <p class="subtitle" data-i18n="places_subtitle">From ancient stone streets to breathtaking panoramas, every corner tells a story</p>
       </div>
 
       <!-- Places Carousel - Populated by main.ts -->
@@ -84,9 +100,9 @@
   <section class="community-section" id="community">
     <div class="container">
       <div class="section-header fade-in">
-        <span class="section-label">Community</span>
-        <h2>From Our Community</h2>
-        <p class="subtitle">Follow what's happening in Rigolizia through our Facebook page</p>
+        <span class="section-label" data-i18n="community_label">Community</span>
+        <h2 data-i18n="community_title">From Our Community</h2>
+        <p class="subtitle" data-i18n="community_subtitle">Follow what's happening in Rigolizia through our Facebook page</p>
       </div>
 
       <!-- Facebook Embeds Carousel - Populated by main.ts -->
@@ -113,22 +129,22 @@
       <div class="footer-content fade-in">
         <div>
           <h3>Rigolizia</h3>
-          <p>
+          <p data-i18n="footer_description">
             A small hamlet in the municipality of Noto, in the province of Syracuse, Sicily.
             Nestled among olive groves and golden wheat fields, Rigolizia offers an authentic
             glimpse into timeless Sicilian life.
           </p>
         </div>
         <div>
-          <h3>Explore</h3>
+          <h3 data-i18n="footer_explore">Explore</h3>
           <ul class="footer-links">
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#places">Iconic Places</a></li>
-            <li><a href="#community">Community</a></li>
+            <li><a href="#hero" data-i18n="footer_home">Home</a></li>
+            <li><a href="#places" data-i18n="nav_places">Iconic Places</a></li>
+            <li><a href="#community" data-i18n="nav_community">Community</a></li>
           </ul>
         </div>
         <div>
-          <h3>Connect</h3>
+          <h3 data-i18n="footer_connect">Connect</h3>
           <ul class="footer-links">
             <li><a href="https://www.facebook.com" target="_blank" rel="noopener">Facebook</a></li>
             <li><a href="https://www.instagram.com" target="_blank" rel="noopener">Instagram</a></li>
@@ -136,7 +152,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>Made with <span class="heart">♥</span> in Sicily &middot; &copy; 2026 Rigolizia</p>
+        <p data-i18n="footer_heart">Made with <span class="heart">♥</span> in Sicily &middot; &copy; 2026 Rigolizia</p>
       </div>
     </div>
   </footer>

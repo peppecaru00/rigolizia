@@ -1,14 +1,17 @@
 /* ========================================
    RIGOLIZIA — Main TypeScript
-   Animations, Carousels, Parallax
+   Animations, Carousels, Parallax, i18n
    ======================================== */
 
 import './style.css';
 
 import siteContent from './data/content.json';
 import communityContent from './data/community.json';
+import translations from './data/translations.json';
 
 // ── Types ──
+type Language = 'en' | 'it';
+
 interface Gem {
   id: number;
   image: string;
@@ -31,6 +34,54 @@ interface FBPost {
   height?: number;
 }
 
+// ── State ──
+let currentLang: Language = (localStorage.getItem('preferredLang') as Language) || 'en';
+
+// ── i18n Logic ──
+function initLanguage(): void {
+  const langButtons = document.querySelectorAll('.lang-dropdown button');
+  langButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang') as Language;
+      if (lang) setLanguage(lang);
+    });
+  });
+
+  updateLanguageUI();
+}
+
+function setLanguage(lang: Language): void {
+  currentLang = lang;
+  localStorage.setItem('preferredLang', lang);
+  updateLanguageUI();
+  
+  // Re-render dynamic content
+  renderHeroGems();
+  renderIconicPlaces();
+  // Community doesn't strictly need re-render unless labels change
+  renderCommunityPosts(); 
+}
+
+function updateLanguageUI(): void {
+  // Update button text
+  const langDisplay = document.querySelector('.lang-current');
+  if (langDisplay) langDisplay.textContent = currentLang.toUpperCase();
+
+  // Update static elements with data-i18n
+  const elements = document.querySelectorAll<HTMLElement>('[data-i18n]');
+  const dictionary = (translations as any)[currentLang];
+  
+  elements.forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (key && dictionary[key]) {
+      el.innerHTML = dictionary[key];
+    }
+  });
+
+  // Update document lang
+  document.documentElement.lang = currentLang;
+}
+
 // ── Initial Render ──
 function initDynamicContent(): void {
   renderHeroGems();
@@ -46,7 +97,9 @@ function renderHeroGems(): void {
   desktopContainer.innerHTML = '';
   mobileContainer.innerHTML = '';
 
-  siteContent.heroGems.forEach((gem: Gem) => {
+  const gems = (siteContent as any)[currentLang].heroGems;
+
+  gems.forEach((gem: Gem) => {
     // Desktop Parallax Layer
     const layer = document.createElement('div');
     layer.className = 'parallax-layer';
@@ -79,7 +132,9 @@ function renderIconicPlaces(): void {
   track.innerHTML = '';
   dotsContainer.innerHTML = '';
 
-  siteContent.places.forEach((place: Place, index: number) => {
+  const places = (siteContent as any)[currentLang].places;
+
+  places.forEach((place: Place, index: number) => {
     const slide = document.createElement('div');
     slide.className = 'carousel-slide';
     slide.innerHTML = `
@@ -110,7 +165,6 @@ function renderCommunityPosts(): void {
   dotsContainer.innerHTML = '';
 
   communityContent.facebookPosts.forEach((post: FBPost, index: number) => {
-    // Encode the URL for the iframe src
     const encodedUrl = encodeURIComponent(post.url);
     const iframeSrc = `https://www.facebook.com/plugins/post.php?href=${encodedUrl}&show_text=true&width=500`;
     const height = post.height || 600;
@@ -277,8 +331,13 @@ class Carousel {
 
 // ── App Init ──
 document.addEventListener('DOMContentLoaded', () => {
+  initLanguage();
   initDynamicContent();
   initNavbar();
   initFadeAnimations();
-});
 
+  const s = document.createElement('script');
+  s.src = 'https://connect.facebook.net/en_US/sdk.js';
+  s.async = true; s.defer = true; s.crossOrigin = 'anonymous';
+  document.head.appendChild(s);
+});
