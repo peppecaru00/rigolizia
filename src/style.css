@@ -80,8 +80,9 @@ html {
 body {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 1.1rem; /* Slightly larger for beefier feel */
-  line-height: 1.8;
+  font-size: 1.3rem;
+  /* Ultra-Beefy reading size */
+  line-height: 1.85;
   color: var(--text-primary);
   background-color: var(--bg-cream);
   overflow-x: hidden;
@@ -115,18 +116,19 @@ h4 {
 }
 
 h1 {
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(4.5rem, 10vw, 8.5rem);
+  /* Cinematic impact */
   letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: clamp(3.2rem, 6vw, 5.5rem);
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
   letter-spacing: -0.015em;
   margin-bottom: var(--space-md);
 }
 
 h3 {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
   margin-bottom: var(--space-sm);
 }
 
@@ -137,7 +139,7 @@ p {
 .subtitle {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+  font-size: clamp(1.3rem, 2.5vw, 1.85rem);
   color: var(--text-secondary);
   letter-spacing: 0.02em;
 }
@@ -145,8 +147,8 @@ p {
 .section-label {
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  font-size: 1rem;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--color-primary-dark);
   margin-bottom: var(--space-sm);
@@ -155,7 +157,8 @@ p {
 /* ── Layout ── */
 .container {
   width: 100%;
-  max-width: 1440px; /* Expanded for beefier monitors */
+  max-width: 1440px;
+  /* Expanded for beefier monitors */
   margin: 0 auto;
   padding: 0 var(--space-lg);
 }
@@ -193,7 +196,7 @@ section {
 .nav-logo {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: var(--text-dark);
   text-decoration: none;
   letter-spacing: -0.02em;
@@ -214,11 +217,11 @@ section {
 .nav-links a {
   text-decoration: none;
   font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 1.1rem;
   color: var(--text-dark);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   transition: color 0.3s var(--ease-out);
 }
 
@@ -373,8 +376,10 @@ body.no-scroll {
   height: 100vh;
   width: 100%;
   display: flex;
-  align-items: flex-end; /* Push content to bottom */
-  justify-content: flex-start; /* Push content to left */
+  align-items: flex-end;
+  /* Push content to bottom */
+  justify-content: flex-start;
+  /* Push content to left */
   overflow: hidden;
   background-color: #000;
   z-index: 10;
@@ -392,25 +397,25 @@ body.no-scroll {
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transition: opacity 2s ease-in-out, transform 2s ease-in-out; /* Smooth everything */
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+  /* Smooth everything */
   transform: scale(1.1);
 }
 
 .hero-slide.active {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 2s ease-in-out, transform 10s ease-out; /* Long zoom while active */
+  transition: opacity 2s ease-in-out, transform 10s ease-out;
+  /* Long zoom while active */
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.7) 0%,
-    rgba(0, 0, 0, 0.3) 30%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.3) 30%,
+      rgba(0, 0, 0, 0) 100%);
   z-index: 2;
   pointer-events: none;
 }
@@ -418,7 +423,8 @@ body.no-scroll {
 .hero-content {
   position: relative;
   z-index: 10;
-  padding: 0 5% 8%; /* Specific bottom-left padding */
+  padding: 0 5% 8%;
+  /* Specific bottom-left padding */
   max-width: 900px;
   text-align: left;
   display: flex;
@@ -444,7 +450,7 @@ body.no-scroll {
   font-weight: 400;
   font-size: calc(1.8rem + 1vw);
   color: var(--color-primary-light);
-  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .hero-main {
@@ -453,7 +459,7 @@ body.no-scroll {
   font-size: calc(4rem + 4vw);
   line-height: 0.9;
   color: #fff;
-  text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .hero .subtitle {
@@ -464,7 +470,7 @@ body.no-scroll {
   font-size: calc(1rem + 0.5vw);
   color: rgba(255, 255, 255, 0.9);
   max-width: 600px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 .hero .scroll-hint {
@@ -653,7 +659,8 @@ body.no-scroll {
 
 .section-header {
   text-align: center;
-  margin-bottom: var(--space-3xl); /* Increased for editorial feel */
+  margin-bottom: var(--space-3xl);
+  /* Increased for editorial feel */
 }
 
 .section-header h2 {
@@ -677,7 +684,8 @@ body.no-scroll {
 
 .carousel-track {
   display: flex;
-  gap: 2rem; /* The new gap */
+  gap: 2rem;
+  /* The new gap */
   transition: transform 0.8s var(--ease-in-out);
 }
 
@@ -688,7 +696,8 @@ body.no-scroll {
 
 .carousel-slide img {
   width: 100%;
-  height: 680px; /* Beefier photo height */
+  height: 680px;
+  /* Beefier photo height */
   object-fit: cover;
   border-radius: var(--radius-xl);
 }
@@ -724,7 +733,8 @@ body.no-scroll {
   align-items: center;
   justify-content: center;
   gap: var(--space-md);
-  margin-top: var(--space-2xl); /* More space below photography */
+  margin-top: var(--space-2xl);
+  /* More space below photography */
 }
 
 .carousel-btn {
@@ -823,7 +833,8 @@ body.no-scroll {
 
 .fb-carousel-track {
   display: flex;
-  gap: 2rem; /* Matched gap */
+  gap: 2rem;
+  /* Matched gap */
   transition: transform 0.8s var(--ease-in-out);
 }
 
@@ -1072,7 +1083,7 @@ body.no-scroll {
   .hero-main {
     font-size: 3rem;
   }
-  
+
   .hero-content {
     padding-bottom: 20%;
   }
