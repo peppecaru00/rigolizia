@@ -38,20 +38,22 @@ const IconicPlaces: React.FC = () => {
               };
 
               return (
-                <div key={idx} className="min-w-full relative group overflow-hidden rounded-[32px]">
-                  <img 
-                    src={imageUrl} 
-                    alt={place.alt} 
-                    className="w-full h-[680px] object-cover rounded-[32px] shadow-[0_8px_40px_rgba(44,24,16,0.1)] transition-transform duration-700"
-                  />
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/75 via-[#2C1810]/30 to-transparent transition-opacity duration-700 p-[var(--space-2xl)] px-[var(--space-xl)] pb-[var(--space-xl)] flex flex-col justify-end text-white">
-                    <h3 className="font-heading font-semibold text-[clamp(1.4rem,3vw,2.2rem)] mb-[var(--space-xs)] leading-tight text-white drop-shadow-md">
-                      {place.title}
-                    </h3>
-                    <p className="font-body font-light text-[1rem] leading-[1.85] text-white/85 max-w-[50ch] drop-shadow-md">
-                      {place.description}
-                    </p>
+                <div key={idx} className="min-w-full p-4">
+                  <div className="relative group overflow-hidden rounded-[32px] shadow-[0_20px_60px_rgba(44,24,16,0.18)] h-[680px]">
+                    <img 
+                      src={imageUrl} 
+                      alt={place.alt} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/75 via-[#2C1810]/30 to-transparent transition-opacity duration-700 p-[var(--space-2xl)] px-[var(--space-xl)] pb-[var(--space-xl)] flex flex-col justify-end text-white">
+                      <h3 className="font-heading font-semibold text-[clamp(1.4rem,3vw,2.2rem)] mb-[var(--space-xs)] leading-tight text-white drop-shadow-md">
+                        {place.title}
+                      </h3>
+                      <p className="font-body font-light text-[1rem] leading-[1.85] text-white/85 max-w-[50ch] drop-shadow-md">
+                        {place.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
               );

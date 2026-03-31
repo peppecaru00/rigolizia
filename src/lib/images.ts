@@ -9,7 +9,7 @@ export function getHeroImages(): string[] {
     import: 'default',
     eager: true
   });
-  return Object.values(imageModules) as string[];
+  return (Object.values(imageModules) as string[]).map(path => path.replace('/public', ''));
 }
 
 export function getPlacesImages(): string[] {
@@ -18,5 +18,5 @@ export function getPlacesImages(): string[] {
     import: 'default',
     eager: true
   });
-  return Object.values(imageModules) as string[];
+  return (Object.values(imageModules) as string[]).map(path => path.replace('/public', ''));
 }

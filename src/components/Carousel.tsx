@@ -72,7 +72,7 @@ const Carousel: React.FC<CarouselProps> = ({
   };
 
   return (
-    <div className="relative overflow-hidden group rounded-[32px]" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+    <div className="relative rounded-[32px]" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <div 
         ref={trackRef} 
         className="flex transition-transform duration-700 ease-in-out" 
