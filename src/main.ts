@@ -1,6 +1,6 @@
 /* ========================================
    RIGOLIZIA — Main TypeScript
-   Animations, Carousels, Parallax, i18n
+   Animations, Carousels, i18n
    ======================================== */
 
 import './style.css';
@@ -11,14 +11,6 @@ import translations from './data/translations.json';
 
 // ── Types ──
 type Language = 'en' | 'it';
-
-interface Gem {
-  id: number;
-  image: string;
-  alt: string;
-  label: string;
-  driftClass: string;
-}
 
 interface Place {
   id: number;
@@ -36,6 +28,7 @@ interface FBPost {
 
 // ── State ──
 let currentLang: Language = (localStorage.getItem('preferredLang') as Language) || 'en';
+let heroInterval: number | null = null;
 
 // ── i18n Logic ──
 function initLanguage(): void {
@@ -55,10 +48,8 @@ function setLanguage(lang: Language): void {
   localStorage.setItem('preferredLang', lang);
   updateLanguageUI();
   
-  // Re-render dynamic content
-  renderHeroGems();
+  // Re-render dynamic components that need it
   renderIconicPlaces();
-  // Community doesn't strictly need re-render unless labels change
   renderCommunityPosts(); 
 }
 
@@ -84,44 +75,46 @@ function updateLanguageUI(): void {
 
 // ── Initial Render ──
 function initDynamicContent(): void {
-  renderHeroGems();
+  initHeroCarousel();
   renderIconicPlaces();
   renderCommunityPosts();
 }
 
-function renderHeroGems(): void {
-  const desktopContainer = document.getElementById('floating-images');
-  const mobileContainer = document.getElementById('hero-mobile-gallery');
-  if (!desktopContainer || !mobileContainer) return;
+/**
+ * ── Hero Background Carousel ──
+ * Switches between beautiful wide shots of Rigolizia
+ */
+function initHeroCarousel(): void {
+  const container = document.getElementById('hero-carousel');
+  if (!container) return;
 
-  desktopContainer.innerHTML = '';
-  mobileContainer.innerHTML = '';
+  const images = [
+    './images/hero-village.png',
+    './images/hero-countryside.png',
+    './images/hero-church.png',
+    './images/carousel-sunset.png'
+  ];
 
-  const gems = (siteContent as any)[currentLang].heroGems;
+  // Clear and Create slides
+  container.innerHTML = '';
+  const slides: HTMLElement[] = [];
 
-  gems.forEach((gem: Gem) => {
-    // Desktop Parallax Layer
-    const layer = document.createElement('div');
-    layer.className = 'parallax-layer';
-    layer.innerHTML = `
-      <div class="gem-card ${gem.driftClass}">
-        <img src="${gem.image}" alt="${gem.alt}" loading="eager" />
-        <span>${gem.label}</span>
-      </div>
-    `;
-    desktopContainer.appendChild(layer);
-
-    // Mobile Gallery Card
-    const mobileCard = document.createElement('div');
-    mobileCard.className = 'gem-card';
-    mobileCard.innerHTML = `
-      <img src="${gem.image}" alt="${gem.alt}" />
-      <span>${gem.label}</span>
-    `;
-    mobileContainer.appendChild(mobileCard);
+  images.forEach((src, idx) => {
+    const div = document.createElement('div');
+    div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
+    div.style.backgroundImage = `url('${src}')`;
+    container.appendChild(div);
+    slides.push(div);
   });
 
-  initParallax();
+  let currentIdx = 0;
+  if (heroInterval) clearInterval(heroInterval);
+
+  heroInterval = setInterval(() => {
+    slides[currentIdx].classList.remove('active');
+    currentIdx = (currentIdx + 1) % slides.length;
+    slides[currentIdx].classList.add('active');
+  }, 8000) as unknown as number;
 }
 
 function renderIconicPlaces(): void {
@@ -240,27 +233,6 @@ function initNavbar(): void {
   });
 }
 
-// ── Parallax logic ──
-function initParallax(): void {
-  const layers = document.querySelectorAll<HTMLElement>('.parallax-layer');
-  if (!layers.length) return;
-
-  const updateParallax = () => {
-    if (layers[0] && getComputedStyle(layers[0]).display === 'none') return;
-    const scrollY = window.scrollY;
-    layers.forEach((layer, index) => {
-      const speedsY = [0.12, 0.22, 0.08, 0.18, 0.28];
-      const speedsX = [0.03, -0.04, 0.02, -0.02, 0.05];
-      const yOffset = scrollY * (speedsY[index % speedsY.length] || 0.1);
-      const xOffset = scrollY * (speedsX[index % speedsX.length] || 0.05);
-      layer.style.transform = `translate3d(${xOffset}px, -${yOffset}px, 0)`;
-    });
-  };
-
-  window.addEventListener('scroll', updateParallax, { passive: true });
-  updateParallax();
-}
-
 // ── Carousel class ──
 class Carousel {
   container: HTMLElement;
@@ -318,6 +290,7 @@ class Carousel {
   }
 
   update() {
+    if (!this.slides.length) return;
     const slideWidth = this.slides[0].offsetWidth;
     const gap = this.container.id === 'fb-carousel' ? 32 : 0;
     this.track.style.transform = `translateX(-${this.currentIndex * (slideWidth + gap)}px)`;

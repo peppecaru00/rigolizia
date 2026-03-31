@@ -365,237 +365,127 @@ body.no-scroll {
   overflow: hidden;
 }
 
-/* ── Hero Section ── */
+/* ── Hero Section (Immersive Overhaul) ── */
 .hero {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  /* Removed overflow: hidden to allow cards to overlap next section */
+  align-items: flex-end; /* Push content to bottom */
+  justify-content: flex-start; /* Push content to left */
+  overflow: hidden;
+  background-color: #000;
   z-index: 10;
-  padding-top: 80px;
+}
+
+.hero-carousel {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  transform: scale(1.1); /* Slight zoom for extra cinematic feel */
+}
+
+.hero-slide.active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 2s ease-in-out, transform 10s ease-out;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.3) 30%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
 }
 
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 10;
+  padding: 0 5% 8%; /* Specific bottom-left padding */
+  max-width: 900px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .hero h1 {
   opacity: 0;
   transform: translateY(30px);
-  animation: heroFadeUp 1s var(--ease-out) 0.3s forwards;
-  text-shadow: 0 4px 30px rgba(44, 24, 16, 0.1);
+  animation: heroFadeUp 1.2s var(--ease-out) 0.5s forwards;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.2rem;
-  margin-bottom: var(--space-xl);
-  z-index: 10;
+  margin-bottom: 0.5rem;
 }
 
 .hero-pre {
   font-family: var(--font-heading);
   font-style: italic;
   font-weight: 400;
-  font-size: calc(1.5rem + 1vw);
-  color: var(--text-muted);
-  opacity: 0.8;
+  font-size: calc(1.8rem + 1vw);
+  color: var(--color-primary-light);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 .hero-main {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: calc(3.5rem + 3.5vw);
-  line-height: 1;
-  color: var(--text-dark);
+  font-size: calc(4rem + 4vw);
+  line-height: 0.9;
+  color: #fff;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.5);
 }
 
 .hero .subtitle {
   opacity: 0;
   transform: translateY(20px);
-  animation: heroFadeUp 1s var(--ease-out) 0.6s forwards;
-  margin-bottom: var(--space-xl);
-  font-weight: 600;
-  font-size: calc(0.9rem + 0.3vw);
-  color: var(--text-secondary);
+  animation: heroFadeUp 1.2s var(--ease-out) 0.8s forwards;
+  font-weight: 400;
+  font-size: calc(1rem + 0.5vw);
+  color: rgba(255, 255, 255, 0.9);
   max-width: 600px;
-  z-index: 10;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
 .hero .scroll-hint {
   opacity: 0;
-  animation: heroFadeUp 1s var(--ease-out) 1s forwards;
+  animation: heroFadeUp 1s var(--ease-out) 1.5s forwards;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-/* Decorative line under title */
-.hero-divider {
-  width: 60px;
-  height: 2px;
-  background: var(--color-primary);
-  margin: 0 auto var(--space-md);
-  opacity: 0;
-  transform: scaleX(0);
-  animation: dividerGrow 0.8s var(--ease-out) 0.9s forwards;
+.hero .scroll-hint span {
+  color: #fff;
+}
+
+.hero .scroll-arrow {
+  border-color: #fff;
 }
 
 @keyframes heroFadeUp {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes dividerGrow {
-  to {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-}
-
-/* Floating images */
-.floating-images {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.parallax-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-  will-change: transform;
-}
-
-.gem-card {
-  position: absolute;
-  background: var(--bg-card);
-  padding: 12px 12px 24px 12px;
-  /* Classic polaroid padding: wider at the bottom */
-  border-radius: 8px;
-  /* Sharper corners for a more paper-like feel */
-  box-shadow: var(--shadow-float);
-  opacity: 1;
-  animation: floatIn 1.2s var(--ease-out) forwards;
-  will-change: transform;
-  pointer-events: auto;
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
-}
-
-
-.gem-card img {
-  width: 100%;
-  height: calc(100% - 24px);
-  /* Account for the bottom label area */
-  object-fit: cover;
-  border-radius: 2px;
-  display: block;
-}
-
-.gem-card span {
-  display: block;
-  margin-top: 10px;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  text-align: center;
-  line-height: 1;
-}
-
-@keyframes floatIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* Desktop sizing and staggered rotations - Widened for large viewports */
-.parallax-layer:nth-child(1) .gem-card {
-  width: min(400px, 25vw);
-  height: auto;
-  aspect-ratio: 4/5;
-  top: 10%;
-  left: 5%;
-  transform: rotate(-5deg);
-}
-
-.parallax-layer:nth-child(2) .gem-card {
-  width: min(320px, 20vw);
-  height: auto;
-  aspect-ratio: 4/5;
-  top: 15%;
-  right: 5%;
-  transform: rotate(4deg);
-}
-
-.parallax-layer:nth-child(3) .gem-card {
-  width: min(280px, 18vw);
-  height: auto;
-  aspect-ratio: 4/5;
-  bottom: 5%;
-  left: 10%;
-  transform: rotate(3deg);
-}
-
-.parallax-layer:nth-child(4) .gem-card {
-  width: min(240px, 15vw);
-  height: auto;
-  aspect-ratio: 1;
-  top: 5%;
-  left: 45%;
-  transform: rotate(8deg);
-}
-
-.parallax-layer:nth-child(5) .gem-card {
-  width: min(260px, 18vw);
-  height: auto;
-  aspect-ratio: 4/5;
-  bottom: 8%;
-  right: 12%;
-  transform: rotate(-7deg);
-}
-
-/* Gentle floating animation applied to the gem-card div */
-.float-drift {
-  animation: drift 8s ease-in-out infinite alternate;
-}
-
-.float-drift-reverse {
-  animation: driftReverse 9s ease-in-out infinite alternate;
-}
-
-.float-drift-slow {
-  animation: driftSlow 11s ease-in-out infinite alternate;
-}
-
-@keyframes drift {
-  0% {
-    transform: translateY(0) rotate(-4deg);
-  }
-
-  100% {
-    transform: translateY(-15px) translateX(5px) rotate(-2deg);
-  }
-}
-
-@keyframes driftReverse {
-  0% {
-    transform: translateY(0) rotate(3deg);
-  }
-
-  100% {
-    transform: translateY(15px) translateX(-5px) rotate(5deg);
   }
 }
 
@@ -961,6 +851,25 @@ body.no-scroll {
   margin-bottom: var(--space-xl);
 }
 
+/* ── Visit Section ── */
+.visit-section {
+  padding: var(--space-3xl) 0;
+  background: var(--bg-warm);
+}
+
+.map-full {
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-float);
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+}
+
+.map-full iframe {
+  display: block;
+}
+
 .footer h3 {
   color: #fff;
   font-size: 1.4rem;
@@ -1078,21 +987,6 @@ body.no-scroll {
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-  .parallax-layer:nth-child(1) .gem-card {
-    width: 240px;
-    height: 300px;
-  }
-
-  .parallax-layer:nth-child(2) .gem-card {
-    width: 200px;
-    height: 260px;
-  }
-
-  .parallax-layer:nth-child(3) .gem-card {
-    width: 180px;
-    height: 220px;
-  }
-
   .carousel-slide img {
     height: 400px;
   }
@@ -1137,58 +1031,25 @@ body.no-scroll {
     transform: translateX(0);
   }
 
-  /* Hide parallax layers on mobile */
-  .parallax-layer {
-    display: none;
+  .hero-content {
+    padding: 0 8% 12%;
   }
 
-  .hero {
-    background: linear-gradient(to bottom, rgba(255, 249, 240, 0.8), rgba(255, 249, 240, 0.95)),
-      url('./images/hero-village.png') center/cover no-repeat;
+  .hero-main {
+    font-size: 4rem;
   }
 
-  .hero-mobile-gallery {
-    display: flex;
-  }
-
-  .hero h1 {
-    font-size: 3.2rem;
-    line-height: 1.1;
-  }
-
-  .carousel-slide img {
-    height: 320px;
-  }
-
-  .carousel-overlay {
-    padding: var(--space-lg) var(--space-md) var(--space-md);
-  }
-
-  .fb-embed-card {
-    min-width: 90%;
-  }
-
-  .footer-content {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
+  .hero-pre {
+    font-size: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .hero h1 {
-    font-size: 2.6rem;
+  .hero-main {
+    font-size: 3rem;
   }
-
-  .hero .subtitle {
-    font-size: 1rem;
-    padding: 0 var(--space-md);
-  }
-
-  .hero-mobile-gallery .gem-card {
-    min-width: 120px;
-  }
-
-  .carousel-slide img {
-    height: 260px;
+  
+  .hero-content {
+    padding-bottom: 20%;
   }
 }
