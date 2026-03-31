@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 import { cn } from '../lib/utils';
 import { ChevronDown } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 const Navbar: React.FC = () => {
+  const location = useLocation();
+  const isGallery = location.pathname === '/gallery';
   const { lang, setLang, t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileActive, setMobileActive] = useState(false);
@@ -14,24 +17,27 @@ const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { href: '#places', label: 'nav_places' },
-    { href: '#community', label: 'nav_community' },
-    { href: '#visit', label: 'nav_visit' },
+    { href: '/#places', label: 'nav_places' },
+    { href: '/#community', label: 'nav_community' },
+    { href: '/#visit', label: 'nav_visit' },
+    { href: '/gallery', label: 'nav_gallery', isRoute: true },
   ];
+
+  const isDarkText = scrolled || mobileActive || isGallery;
 
   return (
     <nav className={cn(
       'fixed top-0 left-0 right-0 z-[100] transition-all duration-400 ease-out py-3 h-[60px] flex items-center',
-      scrolled && 'bg-[#FFF9F0]/92 backdrop-blur-[20px] shadow-[0_1px_20px_rgba(44,24,16,0.06)] border-b border-black/5',
+      isDarkText && 'bg-[#FFF9F0]/92 backdrop-blur-[20px] shadow-[0_1px_20px_rgba(44,24,16,0.06)] border-b border-black/5',
       mobileActive && 'bg-[#FFF9F0]'
     )}>
       <div className="container mx-auto px-8 max-w-[1440px] flex justify-between items-center h-full relative z-[110]">
-        <a href="#" className={cn(
+        <Link to="/" className={cn(
           "font-heading font-bold text-[1.8rem] flex items-center tracking-tight transition-colors duration-400 leading-none",
-          (scrolled || mobileActive) ? "text-[#C8A96E]" : "text-white"
+          isDarkText ? "text-[#C8A96E]" : "text-white"
         )}>
           Rigolizia
-        </a>
+        </Link>
 
         <div className="flex items-center gap-12">
           <ul className={cn(
@@ -40,16 +46,16 @@ const Navbar: React.FC = () => {
           )}>
             {navLinks.map(link => (
               <li key={link.href}>
-                <a 
-                  href={link.href}
+                <Link 
+                  to={link.href}
                   className={cn(
                     "text-[1.1rem] font-body font-bold uppercase tracking-[0.12em] transition-all duration-[300ms] ease-out",
-                    (scrolled || mobileActive) ? "text-[#2C1810] hover:text-[#B85C38]" : "text-white hover:text-white/70"
+                    isDarkText ? "text-[#2C1810] hover:text-[#B85C38]" : "text-white hover:text-white/70"
                   )}
                   onClick={() => setMobileActive(false)}
                 >
                   {t(link.label)}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -58,7 +64,7 @@ const Navbar: React.FC = () => {
             <button 
               className={cn(
                 "h-10 px-4 border rounded-full flex items-center gap-1 font-body font-bold text-[0.75rem] transition-all duration-300",
-                (scrolled || mobileActive) 
+                isDarkText 
                   ? "border-black/10 text-[#2C1810] hover:border-[#B85C38] hover:bg-[#B85C38]/5" 
                   : "border-white/30 text-white hover:border-white/60 hover:bg-white/10"
               )}
@@ -95,7 +101,7 @@ const Navbar: React.FC = () => {
             {[0, 1, 2].map(i => (
               <span key={i} className={cn(
                 "block w-full h-[2px] rounded-full transition-all duration-300 origin-center",
-                (scrolled || mobileActive) ? "bg-[#2C1810]" : "bg-white",
+                isDarkText ? "bg-[#2C1810]" : "bg-white",
                 mobileActive && i === 0 && "rotate-45 translate-y-[8px]",
                 mobileActive && i === 1 && "opacity-0 -translate-x-2",
                 mobileActive && i === 2 && "-rotate-45 -translate-y-[8px]"
@@ -111,9 +117,9 @@ const Navbar: React.FC = () => {
         mobileActive && "opacity-100 translate-x-0 pointer-events-auto"
       )}>
         {navLinks.map(link => (
-          <a 
+          <Link 
             key={link.href}
-            href={link.href}
+            to={link.href}
             className="text-[2.2rem] font-body font-bold uppercase tracking-[0.12em] text-[#2C1810] hover:text-[#B85C38] transition-all duration-300"
             onClick={() => {
               setMobileActive(false);
@@ -121,7 +127,7 @@ const Navbar: React.FC = () => {
             }}
           >
             {t(link.label)}
-          </a>
+          </Link>
         ))}
       </div>
     </nav>

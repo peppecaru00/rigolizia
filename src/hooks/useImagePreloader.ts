@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getHeroImages, getPlacesImages } from '../lib/images';
+import { getHeroImages, getPlacesImages, getGalleryImagesByCategory } from '../lib/images';
 
 export function useImagePreloader() {
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -8,8 +8,10 @@ export function useImagePreloader() {
   useEffect(() => {
     const heroImages = getHeroImages();
     const placesImages = getPlacesImages();
-    // We could add more static images here, but the carousel images are the largest
-    const allImages = [...heroImages, ...placesImages];
+    const galleryCategories = getGalleryImagesByCategory();
+    const galleryImages = galleryCategories['All'] || [];
+    // Preload all dynamic images to ensure smooth transitions
+    const allImages = [...heroImages, ...placesImages, ...galleryImages];
     
     if (allImages.length === 0) {
       setImagesLoaded(true);

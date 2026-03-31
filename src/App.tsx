@@ -1,13 +1,11 @@
+import { Routes, Route } from 'react-router-dom';
 import { TranslationProvider } from './hooks/useTranslation';
 import { useFadeIn } from './hooks/useFadeIn';
 import { useImagePreloader } from './hooks/useImagePreloader';
-import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import IconicPlaces from './components/IconicPlaces';
-import Community from './components/Community';
-import Visit from './components/Visit';
-import Footer from './components/Footer';
+import LoadingScreen from './components/LoadingScreen';
+import Home from './pages/Home';
+import Gallery from './pages/Gallery';
 
 function App() {
   useFadeIn();
@@ -16,14 +14,11 @@ function App() {
   return (
     <TranslationProvider>
       <LoadingScreen isLoading={!imagesLoaded} progress={progress} />
-      <div className="bg-cream min-h-screen">
-        <Navbar />
-        <Hero />
-        <IconicPlaces />
-        <Community />
-        <Visit />
-        <Footer />
-      </div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/gallery" element={<Gallery />} />
+      </Routes>
     </TranslationProvider>
   );
 }
