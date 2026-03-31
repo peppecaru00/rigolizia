@@ -34,39 +34,8 @@
 
   <!-- ── Hero Section ── -->
   <section class="hero" id="hero">
-    <!-- Floating Parallax Gems (Desktop) -->
-    <div class="floating-images" id="floating-images">
-      <div class="parallax-layer">
-        <div class="gem-card float-drift">
-          <img src="./images/hero-village.png" alt="Rigolizia village view" loading="eager" />
-          <span>The Village</span>
-        </div>
-      </div>
-      <div class="parallax-layer">
-        <div class="gem-card float-drift-reverse">
-          <img src="./images/hero-church.png" alt="Historic church" loading="eager" />
-          <span>The Church</span>
-        </div>
-      </div>
-      <div class="parallax-layer">
-        <div class="gem-card float-drift-slow">
-          <img src="./images/hero-countryside.png" alt="Sicilian countryside" loading="eager" />
-          <span>The Hills</span>
-        </div>
-      </div>
-      <div class="parallax-layer">
-        <div class="gem-card float-drift">
-          <img src="./images/hero-arancini.png" alt="Traditional Sicilian arancini" loading="lazy" />
-          <span>Sicilian Flavors</span>
-        </div>
-      </div>
-      <div class="parallax-layer">
-        <div class="gem-card float-drift-reverse">
-          <img src="./images/hero-olive.png" alt="Olive branch" loading="lazy" />
-          <span>Nature</span>
-        </div>
-      </div>
-    </div>
+    <!-- Floating Parallax Gems (Desktop) - Populated by main.ts -->
+    <div class="floating-images" id="floating-images"></div>
 
     <!-- Hero Content -->
     <div class="hero-content">
@@ -74,29 +43,8 @@
       <div class="hero-divider"></div>
       <p class="subtitle">A hidden gem in the sun-drenched hills of Noto, Sicily</p>
       
-      <!-- Mobile Filmstrip Gallery (Only visible on small screens) -->
-      <div class="hero-mobile-gallery" id="hero-mobile-gallery">
-        <div class="gem-card">
-          <img src="./images/hero-village.png" alt="Rigolizia village view" />
-          <span>The Village</span>
-        </div>
-        <div class="gem-card">
-          <img src="./images/hero-church.png" alt="Historic church" />
-          <span>The Church</span>
-        </div>
-        <div class="gem-card">
-          <img src="./images/hero-countryside.png" alt="Sicilian hills" />
-          <span>The Hills</span>
-        </div>
-        <div class="gem-card">
-          <img src="./images/hero-arancini.png" alt="Traditional food" />
-          <span>Flavors</span>
-        </div>
-        <div class="gem-card">
-          <img src="./images/hero-olive.png" alt="Olive branch" />
-          <span>Nature</span>
-        </div>
-      </div>
+      <!-- Mobile Filmstrip Gallery - Populated by main.ts -->
+      <div class="hero-mobile-gallery" id="hero-mobile-gallery"></div>
 
       <div class="scroll-hint">
         <span>Explore</span>
@@ -114,34 +62,9 @@
         <p class="subtitle">From ancient stone streets to breathtaking panoramas, every corner tells a story</p>
       </div>
 
-      <!-- Places Carousel -->
+      <!-- Places Carousel - Populated by main.ts -->
       <div class="carousel fade-in-scale" id="places-carousel">
-        <div class="carousel-track" id="places-track">
-          <!-- Slide 1 -->
-          <div class="carousel-slide">
-            <img src="images/carousel-piazza.png" alt="The Village Piazza of Rigolizia" />
-            <div class="carousel-overlay">
-              <h3>The Village Piazza</h3>
-              <p>The beating heart of Rigolizia — a sun-kissed square where locals gather for espresso and stories beneath centuries-old stone arches.</p>
-            </div>
-          </div>
-          <!-- Slide 2 -->
-          <div class="carousel-slide">
-            <img src="images/carousel-alley.png" alt="Ancient alleys of Rigolizia" />
-            <div class="carousel-overlay">
-              <h3>The Ancient Alleys</h3>
-              <p>Wander through cobblestone passages draped in bougainvillea, where every turn reveals a postcard-perfect view of Sicilian life.</p>
-            </div>
-          </div>
-          <!-- Slide 3 -->
-          <div class="carousel-slide">
-            <img src="images/carousel-sunset.png" alt="Sunset view from Rigolizia" />
-            <div class="carousel-overlay">
-              <h3>The Sunset Terrace</h3>
-              <p>Watch the Mediterranean sun paint the sky in gold and rose as it dips below the olive groves — an unforgettable daily spectacle.</p>
-            </div>
-          </div>
-        </div>
+        <div class="carousel-track" id="places-track"></div>
       </div>
 
       <!-- Carousel Navigation -->
@@ -149,11 +72,7 @@
         <button class="carousel-btn" id="places-prev" aria-label="Previous slide">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
-        <div class="carousel-dots" id="places-dots">
-          <button class="carousel-dot active" data-index="0" aria-label="Go to slide 1"></button>
-          <button class="carousel-dot" data-index="1" aria-label="Go to slide 2"></button>
-          <button class="carousel-dot" data-index="2" aria-label="Go to slide 3"></button>
-        </div>
+        <div class="carousel-dots" id="places-dots"></div>
         <button class="carousel-btn" id="places-next" aria-label="Next slide">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
@@ -170,31 +89,9 @@
         <p class="subtitle">Follow what's happening in Rigolizia through our Facebook page</p>
       </div>
 
-      <!-- Facebook Embeds Carousel -->
+      <!-- Facebook Embeds Carousel - Populated by main.ts -->
       <div class="fb-carousel fade-in-scale" id="fb-carousel">
-        <div class="fb-carousel-track" id="fb-track">
-          <!-- Facebook Embed Card 1 -->
-          <div class="fb-embed-card" id="fb-embed-1">
-            <div class="fb-embed-placeholder">
-              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              <p>Facebook post embed<br><small>Replace with your post URL in main.js</small></p>
-            </div>
-          </div>
-          <!-- Facebook Embed Card 2 -->
-          <div class="fb-embed-card" id="fb-embed-2">
-            <div class="fb-embed-placeholder">
-              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              <p>Facebook post embed<br><small>Replace with your post URL in main.js</small></p>
-            </div>
-          </div>
-          <!-- Facebook Embed Card 3 -->
-          <div class="fb-embed-card" id="fb-embed-3">
-            <div class="fb-embed-placeholder">
-              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              <p>Facebook post embed<br><small>Replace with your post URL in main.js</small></p>
-            </div>
-          </div>
-        </div>
+        <div class="fb-carousel-track" id="fb-track"></div>
       </div>
 
       <!-- FB Carousel Navigation -->
@@ -202,9 +99,7 @@
         <button class="carousel-btn" id="fb-prev" aria-label="Previous posts">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
-        <div class="carousel-dots" id="fb-dots">
-          <button class="carousel-dot active" data-index="0" aria-label="Go to group 1"></button>
-        </div>
+        <div class="carousel-dots" id="fb-dots"></div>
         <button class="carousel-btn" id="fb-next" aria-label="Next posts">
           <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>

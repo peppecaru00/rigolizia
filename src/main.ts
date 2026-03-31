@@ -5,30 +5,157 @@
 
 import './style.css';
 
-// ── Fade-In Animations via IntersectionObserver ──
-function initFadeAnimations(): void {
-  const fadeElements = document.querySelectorAll<HTMLElement>(
-    '.fade-in, .fade-in-left, .fade-in-right, .fade-in-scale'
-  );
+import siteContent from './data/content.json';
+import communityContent from './data/community.json';
 
-  if (!fadeElements.length) return;
+// ── Types ──
+interface Gem {
+  id: number;
+  image: string;
+  alt: string;
+  label: string;
+  driftClass: string;
+}
 
-  const observer = new IntersectionObserver(
-    (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          (entry.target as HTMLElement).classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      threshold: 0.15,
-      rootMargin: '0px 0px -60px 0px',
+interface Place {
+  id: number;
+  image: string;
+  alt: string;
+  title: string;
+  description: string;
+}
+
+interface FBPost {
+  id: number;
+  url: string;
+  height?: number;
+}
+
+// ── Initial Render ──
+function initDynamicContent(): void {
+  renderHeroGems();
+  renderIconicPlaces();
+  renderCommunityPosts();
+}
+
+function renderHeroGems(): void {
+  const desktopContainer = document.getElementById('floating-images');
+  const mobileContainer = document.getElementById('hero-mobile-gallery');
+  if (!desktopContainer || !mobileContainer) return;
+
+  desktopContainer.innerHTML = '';
+  mobileContainer.innerHTML = '';
+
+  siteContent.heroGems.forEach((gem: Gem) => {
+    // Desktop Parallax Layer
+    const layer = document.createElement('div');
+    layer.className = 'parallax-layer';
+    layer.innerHTML = `
+      <div class="gem-card ${gem.driftClass}">
+        <img src="${gem.image}" alt="${gem.alt}" loading="eager" />
+        <span>${gem.label}</span>
+      </div>
+    `;
+    desktopContainer.appendChild(layer);
+
+    // Mobile Gallery Card
+    const mobileCard = document.createElement('div');
+    mobileCard.className = 'gem-card';
+    mobileCard.innerHTML = `
+      <img src="${gem.image}" alt="${gem.alt}" />
+      <span>${gem.label}</span>
+    `;
+    mobileContainer.appendChild(mobileCard);
+  });
+
+  initParallax();
+}
+
+function renderIconicPlaces(): void {
+  const track = document.getElementById('places-track');
+  const dotsContainer = document.getElementById('places-dots');
+  if (!track || !dotsContainer) return;
+
+  track.innerHTML = '';
+  dotsContainer.innerHTML = '';
+
+  siteContent.places.forEach((place: Place, index: number) => {
+    const slide = document.createElement('div');
+    slide.className = 'carousel-slide';
+    slide.innerHTML = `
+      <img src="${place.image}" alt="${place.alt}" />
+      <div class="carousel-overlay">
+        <h3>${place.title}</h3>
+        <p>${place.description}</p>
+      </div>
+    `;
+    track.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+    dot.setAttribute('data-index', index.toString());
+    dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+    dotsContainer.appendChild(dot);
+  });
+
+  new Carousel('places-carousel', 'places-track', 'places-prev', 'places-next', 'places-dots');
+}
+
+function renderCommunityPosts(): void {
+  const track = document.getElementById('fb-track');
+  const dotsContainer = document.getElementById('fb-dots');
+  if (!track || !dotsContainer) return;
+
+  track.innerHTML = '';
+  dotsContainer.innerHTML = '';
+
+  communityContent.facebookPosts.forEach((post: FBPost, index: number) => {
+    // Encode the URL for the iframe src
+    const encodedUrl = encodeURIComponent(post.url);
+    const iframeSrc = `https://www.facebook.com/plugins/post.php?href=${encodedUrl}&show_text=true&width=500`;
+    const height = post.height || 600;
+
+    const card = document.createElement('div');
+    card.className = 'fb-embed-card';
+    card.innerHTML = `
+      <iframe 
+        src="${iframeSrc}" 
+        width="100%" 
+        height="${height}" 
+        style="border:none;overflow:hidden;border-radius:8px;" 
+        scrolling="no" 
+        frameborder="0" 
+        allowfullscreen="true" 
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+      </iframe>
+    `;
+    track.appendChild(card);
+
+    if (communityContent.facebookPosts.length > 1) {
+      const dot = document.createElement('button');
+      dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+      dot.setAttribute('data-index', index.toString());
+      dot.setAttribute('aria-label', `Go to group ${index + 1}`);
+      dotsContainer.appendChild(dot);
     }
-  );
+  });
 
-  fadeElements.forEach((el) => observer.observe(el));
+  new Carousel('fb-carousel', 'fb-track', 'fb-prev', 'fb-next', 'fb-dots');
+}
+
+// ── Generic Intersection Observer ──
+function initFadeAnimations(): void {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .fade-in-scale')
+          .forEach((el) => observer.observe(el));
 }
 
 // ── Navbar & Mobile Menu ──
@@ -38,29 +165,19 @@ function initNavbar(): void {
   const navLinks = document.getElementById('nav-links');
   if (!nav || !navToggle || !navLinks) return;
 
-  // Scroll effect
-  let ticking = false;
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        if (window.scrollY > 80) {
-          nav.classList.add('scrolled');
-        } else {
-          nav.classList.remove('scrolled');
-        }
-        ticking = false;
-      });
-      ticking = true;
+    if (window.scrollY > 80) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
     }
-  });
+  }, { passive: true });
 
-  // Mobile menu toggle
   navToggle.addEventListener('click', () => {
     nav.classList.toggle('nav-active');
     document.body.classList.toggle('no-scroll');
   });
 
-  // Close menu on link click
   navLinks.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
       nav.classList.remove('nav-active');
@@ -69,252 +186,99 @@ function initNavbar(): void {
   });
 }
 
-// ── Floating image parallax on scroll ──
+// ── Parallax logic ──
 function initParallax(): void {
   const layers = document.querySelectorAll<HTMLElement>('.parallax-layer');
   if (!layers.length) return;
 
   const updateParallax = () => {
-    // Only run if the first layer is actually visible (not hidden via CSS on mobile)
-    if (layers[0] && getComputedStyle(layers[0]).display === 'none') {
-      return;
-    }
-    
+    if (layers[0] && getComputedStyle(layers[0]).display === 'none') return;
     const scrollY = window.scrollY;
-    
     layers.forEach((layer, index) => {
-      // Varied vertical speeds: some fast, some slow
       const speedsY = [0.12, 0.22, 0.08, 0.18, 0.28];
-      // Slight horizontal shifts for a "drifting" feel
       const speedsX = [0.03, -0.04, 0.02, -0.02, 0.05];
-      
       const yOffset = scrollY * (speedsY[index % speedsY.length] || 0.1);
       const xOffset = scrollY * (speedsX[index % speedsX.length] || 0.05);
-      
-      // We apply ONLY the scroll-based translation to the layer.
-      // Rotation and idle drift are handled by the inner .floating-img div via CSS.
       layer.style.transform = `translate3d(${xOffset}px, -${yOffset}px, 0)`;
     });
   };
 
-  // Initial call to set positions
+  window.addEventListener('scroll', updateParallax, { passive: true });
   updateParallax();
-
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        updateParallax();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
 }
 
-// ── Carousel Configuration ──
-interface CarouselOptions {
-  trackId: string;
-  prevId: string;
-  nextId: string;
-  dotsId: string;
-  autoplay?: boolean;
-  interval?: number;
-}
-
-// ── Generic Carousel class ──
+// ── Carousel class ──
 class Carousel {
-  private track: HTMLElement | null;
-  private prevBtn: HTMLElement | null;
-  private nextBtn: HTMLElement | null;
-  private dotsContainer: HTMLElement | null;
-  private currentIndex: number;
-  private totalSlides: number;
-  private autoplayInterval: number;
-  private autoplayTimer: ReturnType<typeof setInterval> | null;
-  private isAutoplay: boolean;
+  container: HTMLElement;
+  track: HTMLElement;
+  prevBtn: HTMLElement | null;
+  nextBtn: HTMLElement | null;
+  dots: HTMLElement[];
+  currentIndex: number = 0;
+  slides: HTMLElement[];
+  autoplayInterval: number | null = null;
 
-  constructor(options: CarouselOptions) {
-    const { trackId, prevId, nextId, dotsId, autoplay = true, interval = 6000 } = options;
+  constructor(containerId: string, trackId: string, prevBtnId: string, nextBtnId: string, dotsId: string) {
+    this.container = document.getElementById(containerId)!;
+    this.track = document.getElementById(trackId)!;
+    this.prevBtn = document.getElementById(prevBtnId);
+    this.nextBtn = document.getElementById(nextBtnId);
+    const dotEls = document.getElementById(dotsId)?.children;
+    this.dots = dotEls ? Array.from(dotEls) as HTMLElement[] : [];
+    this.slides = Array.from(this.track.children) as HTMLElement[];
 
-    this.track = document.getElementById(trackId);
-    this.prevBtn = document.getElementById(prevId);
-    this.nextBtn = document.getElementById(nextId);
-    this.dotsContainer = document.getElementById(dotsId);
-
-    if (!this.track) {
-      this.currentIndex = 0;
-      this.totalSlides = 0;
-      this.autoplayInterval = interval;
-      this.autoplayTimer = null;
-      this.isAutoplay = autoplay;
-      return;
-    }
-
-    this.currentIndex = 0;
-    this.totalSlides = this.track.children.length;
-    this.autoplayInterval = interval;
-    this.autoplayTimer = null;
-    this.isAutoplay = autoplay;
-
+    if (!this.container || !this.track || this.slides.length === 0) return;
     this.init();
   }
 
-  private init(): void {
-    if (this.prevBtn) {
-      this.prevBtn.addEventListener('click', () => {
-        this.prev();
-        this.resetAutoplay();
-      });
-    }
-    if (this.nextBtn) {
-      this.nextBtn.addEventListener('click', () => {
-        this.next();
-        this.resetAutoplay();
-      });
-    }
-
-    if (this.dotsContainer) {
-      this.dotsContainer.addEventListener('click', (e: Event) => {
-        const dot = (e.target as HTMLElement).closest<HTMLElement>('.carousel-dot');
-        if (dot) {
-          const index = parseInt(dot.dataset.index ?? '0', 10);
-          this.goTo(index);
-          this.resetAutoplay();
-        }
-      });
-    }
-
-    this.initSwipe();
-
-    if (this.isAutoplay) {
-      this.startAutoplay();
-    }
-  }
-
-  private goTo(index: number): void {
-    if (!this.track) return;
-
-    if (index < 0) index = this.totalSlides - 1;
-    if (index >= this.totalSlides) index = 0;
-
-    this.currentIndex = index;
-    this.track.style.transform = `translateX(-${index * 100}%)`;
-    this.updateDots();
-  }
-
-  private next(): void {
-    this.goTo(this.currentIndex + 1);
-  }
-
-  private prev(): void {
-    this.goTo(this.currentIndex - 1);
-  }
-
-  private updateDots(): void {
-    if (!this.dotsContainer) return;
-    const dots = this.dotsContainer.querySelectorAll<HTMLElement>('.carousel-dot');
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === this.currentIndex);
+  init() {
+    this.prevBtn?.addEventListener('click', () => this.prev());
+    this.nextBtn?.addEventListener('click', () => this.next());
+    this.dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => this.goTo(index));
     });
-  }
-
-  private startAutoplay(): void {
-    this.autoplayTimer = setInterval(() => this.next(), this.autoplayInterval);
-  }
-
-  private resetAutoplay(): void {
-    if (this.autoplayTimer) clearInterval(this.autoplayTimer);
-    if (this.isAutoplay) this.startAutoplay();
-  }
-
-  private initSwipe(): void {
-    if (!this.track) return;
 
     let startX = 0;
+    this.container.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+    this.container.addEventListener('touchend', (e) => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) diff > 0 ? this.next() : this.prev();
+    }, { passive: true });
 
-    this.track.addEventListener(
-      'touchstart',
-      (e: TouchEvent) => {
-        startX = e.touches[0].clientX;
-      },
-      { passive: true }
-    );
+    if (this.container.id === 'places-carousel') this.startAutoplay();
+  }
 
-    this.track.addEventListener(
-      'touchend',
-      (e: TouchEvent) => {
-        const endX = e.changedTouches[0].clientX;
-        const diff = startX - endX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) {
-            this.next();
-          } else {
-            this.prev();
-          }
-          this.resetAutoplay();
-        }
-      },
-      { passive: true }
-    );
+  goTo(index: number) {
+    this.currentIndex = index;
+    this.update();
+  }
+
+  next() {
+    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+    this.update();
+  }
+
+  prev() {
+    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+    this.update();
+  }
+
+  update() {
+    const slideWidth = this.slides[0].offsetWidth;
+    const gap = this.container.id === 'fb-carousel' ? 32 : 0;
+    this.track.style.transform = `translateX(-${this.currentIndex * (slideWidth + gap)}px)`;
+    this.dots.forEach((dot, i) => dot.classList.toggle('active', i === this.currentIndex));
+  }
+
+  startAutoplay() {
+    this.autoplayInterval = setInterval(() => this.next(), 6000);
   }
 }
 
-// ── Facebook SDK Initialization ──
-//
-// To embed real Facebook posts:
-//
-// 1. Replace the placeholder HTML inside each .fb-embed-card with:
-//    <div class="fb-post" data-href="YOUR_FACEBOOK_POST_URL" data-width="500"></div>
-//
-// 2. The Facebook SDK will automatically render the embeds.
-//
-// Example post URL format:
-//    https://www.facebook.com/YourPage/posts/1234567890
-//
-function initFacebookSDK(): void {
-  const fbPosts = document.querySelectorAll('.fb-post');
-  if (!fbPosts.length) return;
-
-  (window as unknown as Record<string, unknown>).fbAsyncInit = function () {
-    (window as unknown as Record<string, unknown> & { FB: { init: (config: object) => void } }).FB.init({
-      xfbml: true,
-      version: 'v19.0',
-    });
-  };
-
-  const script = document.createElement('script');
-  script.src = 'https://connect.facebook.net/en_US/sdk.js';
-  script.async = true;
-  script.defer = true;
-  script.crossOrigin = 'anonymous';
-  document.head.appendChild(script);
-}
-
-// ── Initialize everything on DOM ready ──
+// ── App Init ──
 document.addEventListener('DOMContentLoaded', () => {
-  initFadeAnimations();
+  initDynamicContent();
   initNavbar();
-  initParallax();
-
-  // Iconic Places Carousel
-  new Carousel({
-    trackId: 'places-track',
-    prevId: 'places-prev',
-    nextId: 'places-next',
-    dotsId: 'places-dots',
-    autoplay: true,
-    interval: 6000,
-  });
-
-  // Facebook Carousel (enable when you have more posts):
-  // new Carousel({
-  //   trackId: 'fb-track',
-  //   prevId: 'fb-prev',
-  //   nextId: 'fb-next',
-  //   dotsId: 'fb-dots',
-  //   autoplay: false,
-  // });
-
-  initFacebookSDK();
+  initFadeAnimations();
 });
+

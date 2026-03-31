@@ -760,9 +760,10 @@ body.no-scroll {
   background: var(--bg-card);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
-  padding: var(--space-md);
+  padding: 0; /* Removed padding to let iframe be edge-to-edge if needed */
   transition: all var(--transition-medium);
   border: 1px solid var(--border-light);
+  overflow: hidden;
 }
 
 .fb-embed-card:hover {
@@ -771,13 +772,7 @@ body.no-scroll {
 }
 
 .fb-embed-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  gap: var(--space-sm);
-  color: var(--text-muted);
+  display: none; /* Iframes handle their own loading or we use a background */
 }
 
 .fb-embed-placeholder svg {

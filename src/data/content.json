@@ -1,0 +1,62 @@
+{
+  "heroGems": [
+    {
+      "id": 1,
+      "image": "./images/hero-village.png",
+      "alt": "Rigolizia village view",
+      "label": "The Village",
+      "driftClass": "float-drift"
+    },
+    {
+      "id": 2,
+      "image": "./images/hero-church.png",
+      "alt": "Historic church",
+      "label": "The Church",
+      "driftClass": "float-drift-reverse"
+    },
+    {
+      "id": 3,
+      "image": "./images/hero-countryside.png",
+      "alt": "Sicilian countryside",
+      "label": "The Hills",
+      "driftClass": "float-drift-slow"
+    },
+    {
+      "id": 4,
+      "image": "./images/hero-arancini.png",
+      "alt": "Traditional Sicilian arancini",
+      "label": "Sicilian Flavors",
+      "driftClass": "float-drift"
+    },
+    {
+      "id": 5,
+      "image": "./images/hero-olive.png",
+      "alt": "Olive branch",
+      "label": "Nature",
+      "driftClass": "float-drift-reverse"
+    }
+  ],
+  "places": [
+    {
+      "id": 1,
+      "image": "images/carousel-piazza.png",
+      "alt": "The Village Piazza of Rigolizia",
+      "title": "The Village Piazza",
+      "description": "The beating heart of Rigolizia — a sun-kissed square where locals gather for espresso and stories beneath centuries-old stone arches."
+    },
+    {
+      "id": 2,
+      "image": "images/carousel-alley.png",
+      "alt": "Ancient alleys of Rigolizia",
+      "title": "The Ancient Alleys",
+      "description": "Wander through cobblestone passages draped in bougainvillea, where every turn reveals a postcard-perfect view of Sicilian life."
+    },
+    {
+      "id": 3,
+      "image": "images/carousel-sunset.png",
+      "alt": "Sunset view from Rigolizia",
+      "title": "The Sunset Terrace",
+      "description": "Watch the Mediterranean sun paint the sky in gold and rose as it dips below the olive groves — an unforgettable daily spectacle."
+    }
+  ]
+}
