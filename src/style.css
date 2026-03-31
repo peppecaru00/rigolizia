@@ -297,15 +297,22 @@ section {
   pointer-events: none;
 }
 
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  will-change: transform;
+}
+
 .floating-img {
   position: absolute;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-float);
-  overflow: hidden;
-  opacity: 0.85; /* Change to 0.85 so they are visible by default */
+  overflow: hidden; /* This now correctly clips the IMG inside the drift DIV */
+  opacity: 0.85;
   animation: floatIn 1.2s var(--ease-out) forwards;
   will-change: transform;
-  z-index: 5;
 }
 
 .floating-img img {
@@ -324,84 +331,74 @@ section {
   }
 }
 
-.floating-img:nth-child(1) {
+/* Position the layers (previously these were on .floating-img) */
+.parallax-layer:nth-child(1) .floating-img {
   width: clamp(180px, 22vw, 320px);
   height: clamp(240px, 28vw, 400px);
   top: 8%;
   left: 4%;
-  animation-delay: 0.4s;
   transform: rotate(-4deg);
 }
 
-.floating-img:nth-child(2) {
+.parallax-layer:nth-child(2) .floating-img {
   width: clamp(160px, 18vw, 260px);
   height: clamp(200px, 22vw, 320px);
   top: 12%;
   right: 5%;
-  animation-delay: 0.7s;
   transform: rotate(3deg);
 }
 
-.floating-img:nth-child(3) {
+.parallax-layer:nth-child(3) .floating-img {
   width: clamp(140px, 16vw, 240px);
   height: clamp(180px, 20vw, 280px);
   bottom: 10%;
   left: 8%;
-  animation-delay: 1s;
   transform: rotate(2deg);
 }
 
-.floating-img:nth-child(4) {
+.parallax-layer:nth-child(4) .floating-img {
   width: clamp(100px, 12vw, 180px);
   height: clamp(100px, 12vw, 180px);
   top: 15%;
   left: 45%;
-  animation-delay: 1.2s;
   transform: rotate(8deg);
-  border-radius: 50%; /* Circle for arancini */
+  border-radius: 50%;
 }
 
-.floating-img:nth-child(5) {
+.parallax-layer:nth-child(5) .floating-img {
   width: clamp(120px, 14vw, 200px);
   height: clamp(160px, 18vw, 240px);
   bottom: 15%;
   right: 10%;
-  animation-delay: 1.5s;
   transform: rotate(-6deg);
 }
 
-@keyframes floatIn {
-  to {
-    opacity: 0.85;
-  }
-}
-
-/* Gentle floating animation applied to the img itself */
-.float-drift img {
+/* Gentle floating animation applied to the floating-img div */
+.float-drift {
   animation: drift 8s ease-in-out infinite alternate;
 }
 
-.float-drift-reverse img {
+.float-drift-reverse {
   animation: driftReverse 9s ease-in-out infinite alternate;
 }
 
-.float-drift-slow img {
+.float-drift-slow {
   animation: driftSlow 11s ease-in-out infinite alternate;
 }
 
 @keyframes drift {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-15px) translateX(5px); }
+  0% { transform: translateY(0) rotate(-4deg); }
+  100% { transform: translateY(-15px) translateX(5px) rotate(-2deg); }
 }
 
 @keyframes driftReverse {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(15px) translateX(-5px); }
+  0% { transform: translateY(0) rotate(3deg); }
+  100% { transform: translateY(15px) translateX(-5px) rotate(5deg); }
 }
 
 @keyframes driftSlow {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.05); }
+  0% { transform: rotate(2deg) scale(1); }
+  100% { transform: rotate(0deg) scale(1.05); }
 }
 
 /* Scroll hint */

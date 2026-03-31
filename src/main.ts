@@ -55,13 +55,13 @@ function initNavbar(): void {
 
 // ── Floating image parallax on scroll ──
 function initParallax(): void {
-  const floatingImages = document.querySelectorAll<HTMLElement>('.floating-img');
-  if (!floatingImages.length) return;
+  const layers = document.querySelectorAll<HTMLElement>('.parallax-layer');
+  if (!layers.length) return;
 
   const updateParallax = () => {
     const scrollY = window.scrollY;
     
-    floatingImages.forEach((img, index) => {
+    layers.forEach((layer, index) => {
       // Varied vertical speeds: some fast, some slow
       const speedsY = [0.12, 0.22, 0.08, 0.18, 0.28];
       // Slight horizontal shifts for a "drifting" feel
@@ -70,11 +70,9 @@ function initParallax(): void {
       const yOffset = scrollY * (speedsY[index % speedsY.length] || 0.1);
       const xOffset = scrollY * (speedsX[index % speedsX.length] || 0.05);
       
-      const rotations = [-4, 3, 2, 8, -6];
-      const rotation = rotations[index % rotations.length];
-      
-      // Combine scroll-based position with its characteristic rotation
-      img.style.transform = `translate3d(${xOffset}px, -${yOffset}px, 0) rotate(${rotation}deg)`;
+      // We apply ONLY the scroll-based translation to the layer.
+      // Rotation and idle drift are handled by the inner .floating-img div via CSS.
+      layer.style.transform = `translate3d(${xOffset}px, -${yOffset}px, 0)`;
     });
   };
 
