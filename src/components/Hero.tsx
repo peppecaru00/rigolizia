@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 import { cn } from '../lib/utils';
+import { getHeroImages } from '../lib/images';
+
+const heroImages = getHeroImages();
 
 const Hero: React.FC = () => {
   const { t } = useTranslation();
-  const [heroImages, setHeroImages] = useState<string[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
-
-  useEffect(() => {
-    const fetchHeroImages = async () => {
-      try {
-        const response = await fetch('/images/hero/hero_manifest.json');
-        if (!response.ok) throw new Error('Could not load hero manifest');
-        const filenames: string[] = await response.json();
-        setHeroImages(filenames.map(f => `/images/hero/${f}`));
-      } catch (err) {
-        console.error("Hero Carousel Error:", err);
-      }
-    };
-    fetchHeroImages();
-  }, []);
 
   useEffect(() => {
     if (heroImages.length < 2) return;
