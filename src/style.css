@@ -104,7 +104,10 @@ a:hover {
 }
 
 /* ── Typography ── */
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.2;
@@ -250,9 +253,17 @@ section {
   transition: all 0.3s var(--ease-out);
 }
 
-.nav-toggle span:nth-child(1) { top: 8px; }
-.nav-toggle span:nth-child(2) { top: 16px; }
-.nav-toggle span:nth-child(3) { top: 24px; }
+.nav-toggle span:nth-child(1) {
+  top: 8px;
+}
+
+.nav-toggle span:nth-child(2) {
+  top: 16px;
+}
+
+.nav-toggle span:nth-child(3) {
+  top: 24px;
+}
 
 /* Hamburger Animation (When Active) */
 .nav-active .nav-toggle span:nth-child(1) {
@@ -355,8 +366,10 @@ body.no-scroll {
 .gem-card {
   position: absolute;
   background: var(--bg-card);
-  padding: 12px 12px 28px 12px; /* Classic polaroid padding: wider at the bottom */
-  border-radius: 4px; /* Sharper corners for a more paper-like feel */
+  padding: 12px 12px 28px 12px;
+  /* Classic polaroid padding: wider at the bottom */
+  border-radius: 4px;
+  /* Sharper corners for a more paper-like feel */
   box-shadow: var(--shadow-float);
   opacity: 0.85;
   animation: floatIn 1.2s var(--ease-out) forwards;
@@ -365,16 +378,11 @@ body.no-scroll {
   transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
 }
 
-.gem-card:hover {
-  transform: scale(1.05) rotate(0deg) !important;
-  box-shadow: var(--shadow-hover);
-  z-index: 10;
-  opacity: 1;
-}
 
 .gem-card img {
   width: 100%;
-  height: calc(100% - 24px); /* Account for the bottom label area */
+  height: calc(100% - 24px);
+  /* Account for the bottom label area */
   object-fit: cover;
   border-radius: 2px;
   display: block;
@@ -398,6 +406,7 @@ body.no-scroll {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 0.85;
   }
@@ -458,18 +467,33 @@ body.no-scroll {
 }
 
 @keyframes drift {
-  0% { transform: translateY(0) rotate(-4deg); }
-  100% { transform: translateY(-15px) translateX(5px) rotate(-2deg); }
+  0% {
+    transform: translateY(0) rotate(-4deg);
+  }
+
+  100% {
+    transform: translateY(-15px) translateX(5px) rotate(-2deg);
+  }
 }
 
 @keyframes driftReverse {
-  0% { transform: translateY(0) rotate(3deg); }
-  100% { transform: translateY(15px) translateX(-5px) rotate(5deg); }
+  0% {
+    transform: translateY(0) rotate(3deg);
+  }
+
+  100% {
+    transform: translateY(15px) translateX(-5px) rotate(5deg);
+  }
 }
 
 @keyframes driftSlow {
-  0% { transform: rotate(2deg) scale(1); }
-  100% { transform: rotate(0deg) scale(1.05); }
+  0% {
+    transform: rotate(2deg) scale(1);
+  }
+
+  100% {
+    transform: rotate(0deg) scale(1.05);
+  }
 }
 
 /* Mobile Gallery (Filmstrip specifically for mobile) */
@@ -529,8 +553,15 @@ body.no-scroll {
 }
 
 @keyframes scrollBounce {
-  0%, 100% { transform: translateY(0) rotate(45deg); }
-  50% { transform: translateY(8px) rotate(45deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(45deg);
+  }
+
+  50% {
+    transform: translateY(8px) rotate(45deg);
+  }
 }
 
 /* ── Fade-in Animation Classes ── */
@@ -579,11 +610,25 @@ body.no-scroll {
 }
 
 /* Stagger children */
-.stagger-children > *:nth-child(1) { transition-delay: 0s; }
-.stagger-children > *:nth-child(2) { transition-delay: 0.1s; }
-.stagger-children > *:nth-child(3) { transition-delay: 0.2s; }
-.stagger-children > *:nth-child(4) { transition-delay: 0.3s; }
-.stagger-children > *:nth-child(5) { transition-delay: 0.4s; }
+.stagger-children>*:nth-child(1) {
+  transition-delay: 0s;
+}
+
+.stagger-children>*:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.stagger-children>*:nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.stagger-children>*:nth-child(4) {
+  transition-delay: 0.3s;
+}
+
+.stagger-children>*:nth-child(5) {
+  transition-delay: 0.4s;
+}
 
 /* ── Iconic Places Section ── */
 .places-section {
@@ -760,7 +805,8 @@ body.no-scroll {
   background: var(--bg-card);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);
-  padding: 0; /* Removed padding to let iframe be edge-to-edge if needed */
+  padding: 0;
+  /* Removed padding to let iframe be edge-to-edge if needed */
   transition: all var(--transition-medium);
   border: 1px solid var(--border-light);
   overflow: hidden;
@@ -772,7 +818,8 @@ body.no-scroll {
 }
 
 .fb-embed-placeholder {
-  display: none; /* Iframes handle their own loading or we use a background */
+  display: none;
+  /* Iframes handle their own loading or we use a background */
 }
 
 .fb-embed-placeholder svg {
@@ -878,12 +925,15 @@ body.no-scroll {
   margin: var(--space-lg) calc(var(--space-md) * -1) 0;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scrollbar-width: none; /* Hide scrollbar Firefox */
-  -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
+  scrollbar-width: none;
+  /* Hide scrollbar Firefox */
+  -ms-overflow-style: none;
+  /* Hide scrollbar IE/Edge */
 }
 
 .hero-mobile-gallery::-webkit-scrollbar {
-  display: none; /* Hide scrollbar Chrome/Safari */
+  display: none;
+  /* Hide scrollbar Chrome/Safari */
 }
 
 .mobile-gallery-card {
@@ -915,9 +965,20 @@ body.no-scroll {
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-  .parallax-layer:nth-child(1) .gem-card { width: 240px; height: 300px; }
-  .parallax-layer:nth-child(2) .gem-card { width: 200px; height: 260px; }
-  .parallax-layer:nth-child(3) .gem-card { width: 180px; height: 220px; }
+  .parallax-layer:nth-child(1) .gem-card {
+    width: 240px;
+    height: 300px;
+  }
+
+  .parallax-layer:nth-child(2) .gem-card {
+    width: 200px;
+    height: 260px;
+  }
+
+  .parallax-layer:nth-child(3) .gem-card {
+    width: 180px;
+    height: 220px;
+  }
 
   .carousel-slide img {
     height: 400px;
@@ -969,8 +1030,8 @@ body.no-scroll {
   }
 
   .hero {
-    background: linear-gradient(to bottom, rgba(255, 249, 240, 0.8), rgba(255, 249, 240, 0.95)), 
-                url('./images/hero-village.png') center/cover no-repeat;
+    background: linear-gradient(to bottom, rgba(255, 249, 240, 0.8), rgba(255, 249, 240, 0.95)),
+      url('./images/hero-village.png') center/cover no-repeat;
   }
 
   .hero-mobile-gallery {
@@ -1004,7 +1065,7 @@ body.no-scroll {
   .hero h1 {
     font-size: 2.6rem;
   }
-  
+
   .hero .subtitle {
     font-size: 1rem;
     padding: 0 var(--space-md);
