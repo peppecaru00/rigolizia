@@ -302,15 +302,26 @@ section {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-float);
   overflow: hidden;
-  opacity: 0;
+  opacity: 0.85; /* Change to 0.85 so they are visible by default */
   animation: floatIn 1.2s var(--ease-out) forwards;
   will-change: transform;
+  z-index: 5;
 }
 
 .floating-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 0.85;
+  }
 }
 
 .floating-img:nth-child(1) {
