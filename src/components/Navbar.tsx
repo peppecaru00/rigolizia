@@ -23,9 +23,9 @@ const Navbar: React.FC = () => {
     <nav className={cn(
       'fixed top-0 left-0 right-0 z-[100] transition-all duration-400 ease-out py-3 h-[60px] flex items-center',
       scrolled && 'bg-[#FFF9F0]/92 backdrop-blur-[20px] shadow-[0_1px_20px_rgba(44,24,16,0.06)] border-b border-black/5',
-      mobileActive && 'h-screen'
+      mobileActive && 'bg-[#FFF9F0]'
     )}>
-      <div className="container mx-auto px-8 max-w-[1440px] flex justify-between items-center h-full">
+      <div className="container mx-auto px-8 max-w-[1440px] flex justify-between items-center h-full relative z-[110]">
         <a href="#" className={cn(
           "font-heading font-bold text-[1.8rem] flex items-center tracking-tight transition-colors duration-400 leading-none",
           (scrolled || mobileActive) ? "text-[#C8A96E]" : "text-white"
@@ -86,7 +86,7 @@ const Navbar: React.FC = () => {
           </div>
 
           <button 
-            className="lg:hidden w-8 h-8 flex flex-col justify-center gap-1.5 focus:outline-none z-[1000]"
+            className="lg:hidden w-8 h-8 flex flex-col justify-center gap-1.5 focus:outline-none relative z-[1001]"
             onClick={() => {
               setMobileActive(!mobileActive);
               document.body.classList.toggle('no-scroll', !mobileActive);
