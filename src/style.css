@@ -265,7 +265,8 @@ section {
   position: absolute;
   top: 100%;
   right: 0;
-  margin-top: 4px; /* Reduced gap for better feel */
+  margin-top: 4px;
+  /* Reduced gap for better feel */
   background: var(--bg-card);
   border: 1px solid rgba(44, 24, 16, 0.1);
   border-radius: 12px;
@@ -372,7 +373,8 @@ body.no-scroll {
   align-items: center;
   justify-content: center;
   text-align: center;
-  overflow: hidden;
+  /* Removed overflow: hidden to allow cards to overlap next section */
+  z-index: 10;
   padding-top: 80px;
 }
 
@@ -384,8 +386,10 @@ body.no-scroll {
 .hero h1 {
   margin-bottom: var(--space-md);
   opacity: 0;
+  font-size: 6rem;
   transform: translateY(30px);
   animation: heroFadeUp 1s var(--ease-out) 0.3s forwards;
+  text-shadow: 2px 2px 80px rgba(97, 72, 9, 0.2);
 }
 
 .hero .subtitle {
@@ -444,12 +448,12 @@ body.no-scroll {
 .gem-card {
   position: absolute;
   background: var(--bg-card);
-  padding: 12px 12px 28px 12px;
+  padding: 12px 12px 24px 12px;
   /* Classic polaroid padding: wider at the bottom */
-  border-radius: 4px;
+  border-radius: 8px;
   /* Sharper corners for a more paper-like feel */
   box-shadow: var(--shadow-float);
-  opacity: 0.85;
+  opacity: 1;
   animation: floatIn 1.2s var(--ease-out) forwards;
   will-change: transform;
   pointer-events: auto;
@@ -486,49 +490,49 @@ body.no-scroll {
   }
 
   to {
-    opacity: 0.85;
+    opacity: 1;
   }
 }
 
 /* Desktop sizing and staggered rotations */
 .parallax-layer:nth-child(1) .gem-card {
-  width: 320px;
-  height: 400px;
-  top: 8%;
-  left: 4%;
-  transform: rotate(-4deg);
+  width: 400px;
+  height: 520px;
+  top: 15%;
+  left: 2%;
+  transform: rotate(-5deg);
 }
 
 .parallax-layer:nth-child(2) .gem-card {
-  width: 260px;
-  height: 320px;
-  top: 12%;
-  right: 5%;
-  transform: rotate(3deg);
+  width: 320px;
+  height: 420px;
+  top: 20%;
+  right: 2%;
+  transform: rotate(4deg);
 }
 
 .parallax-layer:nth-child(3) .gem-card {
-  width: 240px;
-  height: 280px;
-  bottom: 10%;
-  left: 8%;
-  transform: rotate(2deg);
+  width: 280px;
+  height: 360px;
+  bottom: -18%;
+  left: 15%;
+  transform: rotate(3deg);
 }
 
 .parallax-layer:nth-child(4) .gem-card {
-  width: 180px;
-  height: 180px;
-  top: 15%;
-  left: 45%;
+  width: 260px;
+  height: 260px;
+  top: 12%;
+  left: 40%;
   transform: rotate(8deg);
 }
 
 .parallax-layer:nth-child(5) .gem-card {
-  width: 200px;
-  height: 240px;
+  width: 240px;
+  height: 320px;
   bottom: 15%;
-  right: 10%;
-  transform: rotate(-6deg);
+  right: 8%;
+  transform: rotate(-7deg);
 }
 
 /* Gentle floating animation applied to the gem-card div */
