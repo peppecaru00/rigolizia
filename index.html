@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rigolizia — A Hidden Gem in Noto, Sicily</title>
-  <meta name="description" content="Discover Rigolizia, a charming Sicilian hamlet nestled in the hills of Noto. Explore golden limestone streets, ancient churches, and breathtaking countryside views." />
+  <meta name="description"
+    content="Discover Rigolizia, a charming Sicilian hamlet nestled in the hills of Noto. Explore golden limestone streets, ancient churches, and breathtaking countryside views." />
   <meta property="og:title" content="Welcome to Rigolizia — Noto, Sicily" />
   <meta property="og:description" content="A hidden gem in the heart of Sicily. Discover the beauty of Rigolizia." />
   <meta property="og:type" content="website" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
+
 <body>
 
   <!-- ── Navigation ── -->
   <nav class="nav" id="main-nav">
     <div class="container">
       <a href="#" class="nav-logo">Rigolizia</a>
-      
+
       <div class="nav-right">
         <ul class="nav-links" id="nav-links">
           <li><a href="#places" data-i18n="nav_places">Places</a></li>
@@ -30,7 +34,9 @@
         <div class="lang-switcher">
           <button id="lang-toggle" class="lang-btn" aria-label="Switch language">
             <span class="lang-current">EN</span>
-            <svg class="lang-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+            <svg class="lang-arrow" viewBox="0 0 24 24">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
           </button>
           <div class="lang-dropdown">
             <button data-lang="en">English</button>
@@ -58,7 +64,7 @@
       <h1 data-i18n="hero_title">Welcome to<br>Rigolizia</h1>
       <div class="hero-divider"></div>
       <p class="subtitle" data-i18n="hero_subtitle">A hidden gem in the sun-drenched hills of Noto, Sicily</p>
-      
+
       <!-- Mobile Filmstrip Gallery - Populated by main.ts -->
       <div class="hero-mobile-gallery" id="hero-mobile-gallery"></div>
 
@@ -75,7 +81,8 @@
       <div class="section-header fade-in">
         <span class="section-label" data-i18n="places_label">Discover</span>
         <h2 data-i18n="places_title">Iconic Places</h2>
-        <p class="subtitle" data-i18n="places_subtitle">From ancient stone streets to breathtaking panoramas, every corner tells a story</p>
+        <p class="subtitle" data-i18n="places_subtitle">From ancient stone streets to breathtaking panoramas, every
+          corner tells a story</p>
       </div>
 
       <!-- Places Carousel - Populated by main.ts -->
@@ -86,11 +93,15 @@
       <!-- Carousel Navigation -->
       <div class="carousel-nav fade-in" id="places-carousel-nav">
         <button class="carousel-btn" id="places-prev" aria-label="Previous slide">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <svg viewBox="0 0 24 24">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
         </button>
         <div class="carousel-dots" id="places-dots"></div>
         <button class="carousel-btn" id="places-next" aria-label="Next slide">
-          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <svg viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </button>
       </div>
     </div>
@@ -102,7 +113,8 @@
       <div class="section-header fade-in">
         <span class="section-label" data-i18n="community_label">Community</span>
         <h2 data-i18n="community_title">From Our Community</h2>
-        <p class="subtitle" data-i18n="community_subtitle">Follow what's happening in Rigolizia through our Facebook page</p>
+        <p class="subtitle" data-i18n="community_subtitle">Follow what's happening in Rigolizia through our Facebook
+          page</p>
       </div>
 
       <!-- Facebook Embeds Carousel - Populated by main.ts -->
@@ -113,11 +125,15 @@
       <!-- FB Carousel Navigation -->
       <div class="carousel-nav fade-in" id="fb-carousel-nav">
         <button class="carousel-btn" id="fb-prev" aria-label="Previous posts">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <svg viewBox="0 0 24 24">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
         </button>
         <div class="carousel-dots" id="fb-dots"></div>
         <button class="carousel-btn" id="fb-next" aria-label="Next posts">
-          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <svg viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </button>
       </div>
     </div>
@@ -159,4 +175,5 @@
 
   <script type="module" src="/src/main.ts"></script>
 </body>
+
 </html>
