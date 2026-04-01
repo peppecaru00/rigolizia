@@ -19,26 +19,12 @@
     "en": {
       "alt": "The Shop",
       "title": "The Shop",
-      "description": "From fresh bread to local wine, fruits, vegetables, drinks, coffee and personal care products, the shop is at the heart of the community."
+      "description": "From bread to local wine, fruits, vegetables, drinks, coffee and personal care products, the shop is at the heart of the community."
     },
     "it": {
       "alt": "Il Minimarket",
       "title": "Il Minimarket",
       "description": "Dal pane fresco al vino locale, frutta, verdura, bevande, caffè e prodotti per la cura della persona, il negozio è al centro della comunità."
-    }
-  },
-  {
-    "id": 3,
-    "image": "images/iconicPlaces/sunset.png",
-    "en": {
-      "alt": "Sunset view",
-      "title": "The Sunset Terrace",
-      "description": "Watch the Mediterranean sun paint the sky in gold and rose as it dips below the olive groves."
-    },
-    "it": {
-      "alt": "Vista tramonto",
-      "title": "La Terrazza del Tramonto",
-      "description": "Osserva il sole tingere il cielo di oro e rosa mentre scende dietro gli uliveti secolari."
     }
   }
 ]

@@ -44,7 +44,7 @@ const Hero: React.FC<HeroProps> = ({ startCarousel = true }) => {
           className="flex flex-col items-start gap-0.5 mb-2 opacity-0 -translate-y-[-30px] animate-[heroFadeUp_1.2s_cubic-bezier(0.22,1,0.36,1)_0.5s_forwards]"
           dangerouslySetInnerHTML={{ __html: t('hero_title').replace("class='hero-pre'", "class='font-heading italic font-normal text-[clamp(1.8rem,3vw,2.8rem)] text-[#DBBE85] drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]'").replace("class='hero-main'", "class='font-heading font-bold text-[clamp(4rem,8vw,8rem)] leading-[0.9] text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)]'") }}
         />
-        <p className="opacity-0 -translate-y-[-20px] animate-[heroFadeUp_1.2s_cubic-bezier(0.22,1,0.36,1)_0.8s_forwards] font-body font-normal text-white/90 text-[clamp(1rem,2vw,1.5rem)] max-w-[600px] drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] tracking-wide">
+        <p className="opacity-0 -translate-y-[-20px] animate-[heroFadeUp_1.2s_cubic-bezier(0.22,1,0.36,1)_0.8s_forwards] font-body font-normal text-white/90 text-[clamp(1rem,2vw,1.5rem)] max-w-[700px] drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] tracking-wide">
           {t('hero_subtitle')}
         </p>
 

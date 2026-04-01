@@ -20,7 +20,8 @@
     "footer_description": "A small hamlet in the municipality of Noto, in the province of Syracuse, Sicily. Nestled among olive groves and golden wheat fields, Rigolizia offers an authentic glimpse into timeless Sicilian life.",
     "footer_explore": "Explore",
     "footer_connect": "Connect",
-    "footer_heart": "Made with <span class=\"heart\">♥</span> in Sicily · &copy; 2026 Rigolizia"
+    "footer_heart": "Made with <span class=\"heart\">❤️</span> in Sicily · &copy; 2026 Rigolizia",
+    "footer_home": "Go up"
   },
   "it": {
     "nav_places": "Luoghi",
@@ -43,6 +44,7 @@
     "footer_description": "Una piccola frazione del comune di Noto, in provincia di Siracusa, Sicilia. Immersa tra uliveti e campi di grano dorati, Rigolizia offre uno scorcio autentico della vita siciliana senza tempo.",
     "footer_explore": "Esplora",
     "footer_connect": "Contatti",
-    "footer_heart": "Fatto con <span class=\"heart\">♥</span> in Sicilia · &copy; 2026 Rigolizia"
+    "footer_heart": "Fatto con <span class=\"heart\">❤️</span> in Sicilia · &copy; 2026 Rigolizia",
+    "footer_home": "Torna su"
   }
 }

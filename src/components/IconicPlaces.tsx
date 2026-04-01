@@ -5,7 +5,7 @@ import Carousel from './Carousel';
 
 const IconicPlaces: React.FC = () => {
   const { lang, t } = useTranslation();
-  
+
   return (
     <section className="relative overflow-hidden py-[var(--space-xl)] bg-[#FAF3E8] before:content-[''] before:absolute before:top-0 before:inset-x-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[#DBBE85] before:to-transparent" id="places">
       <div className="container mx-auto px-4 md:px-14 max-w-[1440px]">
@@ -28,10 +28,10 @@ const IconicPlaces: React.FC = () => {
 
               return (
                 <div key={idx} className="min-w-full p-2 md:p-4">
-                  <div className="relative group overflow-hidden rounded-[32px] shadow-[0_20px_60px_rgba(44,24,16,0.18)] h-[680px]">
-                    <img 
-                      src={item.image} 
-                      alt={details.alt} 
+                  <div className="relative group overflow-hidden rounded-[1rem] shadow-[0_20px_60px_rgba(44,24,16,0.18)] h-[680px]">
+                    <img
+                      src={item.image}
+                      alt={details.alt}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     {/* Overlay */}
