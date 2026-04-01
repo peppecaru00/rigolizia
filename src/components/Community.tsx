@@ -1,11 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 import communityContent from '../data/community.json';
 import Carousel from './Carousel';
 
+interface FBPost {
+  id: string | number;
+  url: string;
+}
+
 const Community: React.FC = () => {
   const { t } = useTranslation();
-  const facebookPosts = communityContent.facebookPosts || [];
+  const [facebookPosts, setFacebookPosts] = useState<FBPost[]>(
+    communityContent.facebookPosts || []
+  );
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const pageId = import.meta.env.VITE_FACEBOOK_PAGE_ID;
+      const token = import.meta.env.VITE_FACEBOOK_ACCESS_TOKEN;
+
+      // Fallback to static JSON if no API credentials are provided
+      if (!pageId || !token) return;
+
+      try {
+        const url = `https://graph.facebook.com/v19.0/${pageId}/posts?fields=permalink_url&limit=6&access_token=${token}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data && data.data) {
+          const fetchedPosts = data.data
+            .filter((item: any) => item.permalink_url)
+            .map((item: any) => ({
+              id: item.id,
+              url: item.permalink_url,
+            }));
+
+          if (fetchedPosts.length > 0) {
+            setFacebookPosts(fetchedPosts);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching Facebook posts:', error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   return (
     <section className="py-[var(--space-xl)] bg-[#FFF9F0] overflow-hidden" id="community">
@@ -28,7 +68,7 @@ const Community: React.FC = () => {
               const encodedUrl = encodeURIComponent(post.url);
               const iframeSrc = `https://www.facebook.com/plugins/post.php?href=${encodedUrl}&show_text=true&width=500`;
               return (
-                <div key={post.id} className="min-w-full flex justify-center py-4">
+                <div key={post.id} className="basis-full md:basis-[48%] lg:basis-[31%] shrink-0 flex justify-center py-4">
                   <a 
                     href={post.url} 
                     target="_blank" 

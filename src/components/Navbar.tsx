@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 const Navbar: React.FC = () => {
   const location = useLocation();
   const isGallery = location.pathname === '/gallery';
+  const isHistory = location.pathname === '/history';
   const { lang, setLang, t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileActive, setMobileActive] = useState(false);
@@ -21,10 +22,11 @@ const Navbar: React.FC = () => {
     { href: '/#places', label: 'nav_places' },
     { href: '/#community', label: 'nav_community' },
     { href: '/#visit', label: 'nav_visit' },
+    { href: '/history', label: 'nav_history', isRoute: true },
     { href: '/gallery', label: 'nav_gallery', isRoute: true },
   ];
 
-  const isDarkText = scrolled || mobileActive || isGallery;
+  const isDarkText = scrolled || mobileActive || isGallery || isHistory;
 
   return (
     <nav className={cn(

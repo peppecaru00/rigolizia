@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import LoadingScreen from './components/LoadingScreen';
 import Home from './pages/Home';
 import Gallery from './pages/Gallery';
+import History from './pages/History';
 
 // Component to handle scrolling to hash fragments
 function ScrollToHash() {
@@ -44,6 +45,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/history" element={<History />} />
       </Routes>
     </TranslationProvider>
   );
