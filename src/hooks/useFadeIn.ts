@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export const useFadeIn = () => {
+export const useFadeIn = (deps: any[] = []) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -11,12 +11,15 @@ export const useFadeIn = () => {
           }
         });
       },
-      { threshold: 0.1 }
+      { 
+        threshold: 0.1,
+        rootMargin: '50px 0px' 
+      }
     );
 
     const elements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .fade-in-scale');
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, []);
+  }, deps);
 };

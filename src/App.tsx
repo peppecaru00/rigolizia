@@ -30,8 +30,11 @@ function ScrollToHash() {
 }
 
 function App() {
-  useFadeIn();
+  const { pathname } = useLocation();
   const { imagesLoaded, progress } = useImagePreloader();
+  
+  // Re-run animation observer when switching pages or finishing loading image assets
+  useFadeIn([pathname, imagesLoaded]);
 
   return (
     <TranslationProvider>
