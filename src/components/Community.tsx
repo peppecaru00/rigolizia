@@ -69,10 +69,10 @@ const Community: React.FC = () => {
               const iframeSrc = `https://www.facebook.com/plugins/post.php?href=${encodedUrl}&show_text=true&width=500`;
               return (
                 <div key={post.id} className="basis-full md:basis-[48%] lg:basis-[31%] shrink-0 flex justify-center py-4">
-                  <a 
-                    href={post.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <a
+                    href={post.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-full max-w-[500px] bg-white rounded-xl shadow-[0_8px_40px_rgba(44,24,16,0.1)] overflow-hidden border border-black/5 block cursor-pointer transition-transform duration-300 hover:-translate-y-1"
                   >
                     <iframe

@@ -9,11 +9,11 @@ interface CarouselProps {
   children: React.ReactNode[];
 }
 
-const Carousel: React.FC<CarouselProps> = ({ 
-  autoplay = false, 
-  interval = 7000, 
+const Carousel: React.FC<CarouselProps> = ({
+  autoplay = false,
+  interval = 7000,
   gap = 32, // gap is in pixels (2rem)
-  children 
+  children
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -73,24 +73,24 @@ const Carousel: React.FC<CarouselProps> = ({
 
   return (
     <div className="relative rounded-[32px]" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-      <div 
-        ref={trackRef} 
-        className="flex transition-transform duration-700 ease-in-out" 
+      <div
+        ref={trackRef}
+        className="flex transition-transform duration-700 ease-in-out"
         style={{ gap: `${gap}px` }}
       >
         {children}
       </div>
 
-      <button 
-        onClick={() => prev(true)} 
+      <button
+        onClick={() => prev(true)}
         className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/90 backdrop-blur-md hidden md:flex items-center justify-center shadow-lg transition-all hover:scale-110 active:scale-95 border border-black/5"
         aria-label="Previous"
       >
         <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 stroke-[2.5px] text-primary" />
       </button>
 
-      <button 
-        onClick={() => next(true)} 
+      <button
+        onClick={() => next(true)}
         className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/90 backdrop-blur-md hidden md:flex items-center justify-center shadow-lg transition-all hover:scale-110 active:scale-95 border border-black/5"
         aria-label="Next"
       >
@@ -102,9 +102,8 @@ const Carousel: React.FC<CarouselProps> = ({
           <button
             key={idx}
             onClick={() => goTo(idx)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-              currentIndex === idx ? 'bg-primary scale-125' : 'bg-[#c8a96e33]'
-            }`}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${currentIndex === idx ? 'bg-primary scale-125' : 'bg-[#c8a96e33]'
+              }`}
             aria-label={`Go to slide ${idx + 1}`}
           />
         ))}
