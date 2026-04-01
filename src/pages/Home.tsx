@@ -5,10 +5,14 @@ import Community from '../components/Community';
 import Visit from '../components/Visit';
 import Footer from '../components/Footer';
 
-const Home: React.FC = () => {
+interface HomeProps {
+  imagesLoaded?: boolean;
+}
+
+const Home: React.FC<HomeProps> = ({ imagesLoaded = true }) => {
   return (
     <div className="bg-[#FFF9F0] min-h-screen">
-      <Hero />
+      <Hero startCarousel={imagesLoaded} />
       <IconicPlaces />
       <Community />
       <Visit />

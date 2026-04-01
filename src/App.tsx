@@ -43,7 +43,7 @@ function App() {
       <Navbar />
       <ScrollToHash />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home imagesLoaded={imagesLoaded} />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/history" element={<History />} />
       </Routes>

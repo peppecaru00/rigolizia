@@ -9,7 +9,11 @@ export function getHeroImages(): string[] {
     import: 'default',
     eager: true
   });
-  return (Object.values(imageModules) as string[]).map(path => path.replace('/public', ''));
+  
+  // Sort by filename (the keys of the glob object)
+  return Object.keys(imageModules)
+    .sort()
+    .map(key => (imageModules[key] as string).replace('/public', ''));
 }
 
 export function getPlacesImages(): string[] {
@@ -18,7 +22,11 @@ export function getPlacesImages(): string[] {
     import: 'default',
     eager: true
   });
-  return (Object.values(imageModules) as string[]).map(path => path.replace('/public', ''));
+  
+  // Sort by filename
+  return Object.keys(imageModules)
+    .sort()
+    .map(key => (imageModules[key] as string).replace('/public', ''));
 }
 
 export function getGalleryImagesByCategory(): Record<string, string[]> {
@@ -33,16 +41,18 @@ export function getGalleryImagesByCategory(): Record<string, string[]> {
     'All': [] // Default category for everything
   };
 
-  for (const [path, url] of Object.entries(imageModules)) {
-    const publicUrl = (url as string).replace('/public', '');
+  const sortedPaths = Object.keys(imageModules).sort();
+
+  for (const path of sortedPaths) {
+    const url = imageModules[path] as string;
+    const publicUrl = url.replace('/public', '');
     categories['All'].push(publicUrl);
 
     const relativePath = path.replace('/public/images/gallery/', '');
     const parts = relativePath.split('/');
 
-    // If it's inside a subfolder, the first part is the folder/category name
     if (parts.length > 1) {
-      const category = parts[0]; // e.g., "eventi-events"
+      const category = parts[0];
       
       if (!categories[category]) {
         categories[category] = [];

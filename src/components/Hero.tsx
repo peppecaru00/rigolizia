@@ -5,17 +5,21 @@ import { getHeroImages } from '../lib/images';
 
 const heroImages = getHeroImages();
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  startCarousel?: boolean;
+}
+
+const Hero: React.FC<HeroProps> = ({ startCarousel = true }) => {
   const { t } = useTranslation();
   const [currentIdx, setCurrentIdx] = useState(0);
 
   useEffect(() => {
-    if (heroImages.length < 2) return;
+    if (heroImages.length < 2 || !startCarousel) return;
     const interval = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % heroImages.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, [heroImages]);
+  }, [heroImages, startCarousel]);
 
   return (
     <section className="relative h-screen w-full flex items-end justify-start overflow-hidden bg-black z-10" id="hero">

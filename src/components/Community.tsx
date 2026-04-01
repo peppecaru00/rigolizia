@@ -16,31 +16,16 @@ const Community: React.FC = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const pageId = import.meta.env.VITE_FACEBOOK_PAGE_ID;
-      const token = import.meta.env.VITE_FACEBOOK_ACCESS_TOKEN;
-
-      // Fallback to static JSON if no API credentials are provided
-      if (!pageId || !token) return;
-
       try {
-        const url = `https://graph.facebook.com/v19.0/${pageId}/posts?fields=permalink_url&limit=6&access_token=${token}`;
-        const response = await fetch(url);
-        const data = await response.json();
+        const response = await fetch('/api/facebook');
+        if (!response.ok) return; // Keep static posts if API fails
 
-        if (data && data.data) {
-          const fetchedPosts = data.data
-            .filter((item: any) => item.permalink_url)
-            .map((item: any) => ({
-              id: item.id,
-              url: item.permalink_url,
-            }));
-
-          if (fetchedPosts.length > 0) {
-            setFacebookPosts(fetchedPosts);
-          }
+        const fetchedPosts = await response.json();
+        if (Array.isArray(fetchedPosts) && fetchedPosts.length > 0) {
+          setFacebookPosts(fetchedPosts);
         }
       } catch (error) {
-        console.error('Error fetching Facebook posts:', error);
+        console.error('Error fetching Facebook posts from API:', error);
       }
     };
 

@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url = `https://graph.facebook.com/v19.0/${pageId}/posts?fields=permalink_url&limit=6&access_token=${token}`;
+    const url = `https://graph.facebook.com/v25.0/${pageId}/posts?fields=permalink_url&limit=6&access_token=${token}`;
     const response = await fetch(url);
     const data = await response.json();
 
