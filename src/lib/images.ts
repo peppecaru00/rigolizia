@@ -17,7 +17,7 @@ export function getHeroImages(): string[] {
 }
 
 export function getPlacesImages(): string[] {
-  const imageModules = import.meta.glob('/public/images/places/*.{png,jpg,jpeg,webp,avif,gif}', {
+  const imageModules = import.meta.glob('/public/images/iconicPlaces/*.{png,jpg,jpeg,webp,avif,gif}', {
     query: '?url',
     import: 'default',
     eager: true
