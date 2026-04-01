@@ -143,12 +143,12 @@ const GalleryLightbox: React.FC<LightboxProps> = ({ images, initialIndex, onClos
         />
       </div>
 
-      {/* Arrows — hide while zoomed in on mobile */}
+      {/* Navigation Arrows — Desktop Only */}
       {images.length > 1 && (
         <>
           <button
             onClick={prev}
-            className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-16 md:h-16 rounded-full bg-black/50 hover:bg-white/20 backdrop-blur-md flex items-center justify-center transition-all active:scale-95 group transform-gpu border border-white/10"
+            className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-16 md:h-16 rounded-full bg-black/50 hover:bg-white/20 backdrop-blur-md hidden md:flex items-center justify-center transition-all active:scale-95 group transform-gpu border border-white/10"
             aria-label="Previous image"
           >
             <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 stroke-[2px] text-white transition-transform duration-300 group-hover:-translate-x-1" />
@@ -156,19 +156,12 @@ const GalleryLightbox: React.FC<LightboxProps> = ({ images, initialIndex, onClos
 
           <button
             onClick={next}
-            className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-16 md:h-16 rounded-full bg-black/50 hover:bg-white/20 backdrop-blur-md flex items-center justify-center transition-all active:scale-95 group transform-gpu border border-white/10"
+            className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 md:w-16 md:h-16 rounded-full bg-black/50 hover:bg-white/20 backdrop-blur-md hidden md:flex items-center justify-center transition-all active:scale-95 group transform-gpu border border-white/10"
             aria-label="Next image"
           >
             <ChevronRight className="w-6 h-6 md:w-8 md:h-8 stroke-[2px] text-white transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </>
-      )}
-
-      {/* Zoom hint on mobile */}
-      {scale === 1 && (
-        <div className="absolute bottom-6 inset-x-0 flex justify-center pointer-events-none md:hidden">
-          <span className="text-white/30 text-xs tracking-widest">Pinch to zoom · Swipe to navigate</span>
-        </div>
       )}
     </div>
   );

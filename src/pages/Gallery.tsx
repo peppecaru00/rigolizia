@@ -4,6 +4,7 @@ import { useTranslation } from '../hooks/useTranslation';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../lib/utils';
+import { useFadeIn } from '../hooks/useFadeIn';
 import GalleryLightbox from '../components/GalleryLightbox';
 
 const getCategoryDisplayName = (cat: string, lang: string) => {
@@ -73,29 +74,34 @@ const Gallery: React.FC = () => {
   const activeImages = categoryMap[activeCategory] || [];
   const columns = useMemo(() => distributeToColumns(activeImages, colCount), [activeImages, colCount]);
 
+  // Re-run animation observer when category, images, or layout changes
+  useFadeIn([activeCategory, activeImages.length, colCount]);
+
   return (
-    <div className="min-h-screen bg-[#FAF3E8] pt-32 pb-24 px-6 md:px-12 max-w-[1800px] mx-auto">
+    <div className="min-h-screen bg-[#FAF3E8] pt-32 pb-24 px-6 md:px-12 max-w-[1800px] mx-auto overflow-x-hidden">
       <div className="mb-8 md:mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-        <div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#2C1810] mb-2">
+        <div className="fade-in">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#2C1810] mb-2 font-heading">
             {lang === 'it' ? 'Galleria' : 'Gallery'}
           </h1>
-          <p className="text-[#5A4636] text-lg">
+          <p className="text-[#5A4636] text-lg font-body font-light">
             {lang === 'it' ? 'Un viaggio visivo attraverso Rigolizia' : 'A visual journey through Rigolizia'}
           </p>
         </div>
 
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-[#C8A96E] hover:text-[#B85C38] transition-colors font-body font-bold uppercase tracking-widest text-[0.85rem] border border-[#C8A96E]/20 hover:border-[#B85C38] px-6 py-3 rounded-full shrink-0"
-        >
-          <ArrowLeft size={16} />
-          {lang === 'it' ? 'Torna alla Home' : 'Back to Home'}
-        </Link>
+        <div className="fade-in">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-[#C8A96E] hover:text-[#B85C38] transition-colors font-body font-bold uppercase tracking-widest text-[0.85rem] border border-[#C8A96E]/20 hover:border-[#B85C38] px-6 py-3 rounded-full shrink-0"
+          >
+            <ArrowLeft size={16} />
+            {lang === 'it' ? 'Torna alla Home' : 'Back to Home'}
+          </Link>
+        </div>
       </div>
 
       {availableCategories.length > 1 && (
-        <div className="flex flex-wrap gap-3 mb-10 pb-4 border-b border-[#2C1810]/5">
+        <div className="flex flex-wrap gap-3 mb-10 pb-4 border-b border-[#2C1810]/5 fade-in">
           {availableCategories.map((cat) => (
             <button
               key={cat}
@@ -113,20 +119,20 @@ const Gallery: React.FC = () => {
         </div>
       )}
 
-      {/* Masonry Layout - Left-to-Right Order */}
+      {/* Masonry Layout - Left-to-Right Order with Animations */}
       {activeImages.length === 0 ? (
         <div className="py-20 text-center text-[#5A4636] font-body text-xl">
           {lang === 'it' ? 'Nessuna immagine trovata in questa categoria.' : 'No images found in this category.'}
         </div>
       ) : (
-        <div className="flex gap-3 items-start">
+        <div className="flex gap-4 items-start">
           {columns.map((col, colIdx) => (
-            <div key={colIdx} className="flex-1 flex flex-col gap-3">
+            <div key={colIdx} className="flex-1 flex flex-col gap-4">
               {col.map(({ item: src, originalIndex }) => (
                 <button
                   key={src}
                   onClick={() => setLightboxIndex(originalIndex)}
-                  className="w-full text-left relative group rounded-2xl overflow-hidden bg-[#E8E0D5] shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1 cursor-zoom-in"
+                  className="w-full text-left relative group rounded-[1.5rem] overflow-hidden bg-[#E8E0D5] shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1 cursor-zoom-in border border-white/10 fade-in"
                   aria-label={`View image ${originalIndex + 1}`}
                 >
                   <img
@@ -134,15 +140,15 @@ const Gallery: React.FC = () => {
                     alt={`${getCategoryDisplayName(activeCategory, lang)} ${originalIndex + 1}`}
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                    className="w-full h-auto block transition-transform duration-1000 ease-out group-hover:scale-[1.08]"
                   />
 
                   {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   {/* Bottom Label */}
-                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75">
-                    <span className="text-white/90 text-xs font-bold tracking-widest drop-shadow-md">
+                  <div className="absolute bottom-5 left-5 right-5 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                    <span className="text-white/90 text-[0.7rem] font-bold tracking-[0.2em] uppercase drop-shadow-md">
                       {String(originalIndex + 1).padStart(2, '0')} — Rigolizia
                     </span>
                   </div>
