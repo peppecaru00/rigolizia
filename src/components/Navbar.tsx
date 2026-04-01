@@ -30,11 +30,11 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={cn(
-      'fixed top-0 left-0 right-0 z-[100] transition-all duration-400 ease-out py-3 h-[60px] flex items-center',
+      'fixed top-0 left-0 right-0 z-[100] transition-all duration-400 ease-out pt-[env(safe-area-inset-top)] flex flex-col',
       isDarkText && 'bg-[#FFF9F0]/92 backdrop-blur-[20px] shadow-[0_1px_20px_rgba(44,24,16,0.06)]',
       mobileActive && 'bg-[#FFF9F0]'
     )}>
-      <div className="container mx-auto px-8 max-w-[1440px] flex justify-between items-center h-full relative z-[110]">
+      <div className="container mx-auto px-8 max-w-[1440px] flex justify-between items-center h-[60px] relative z-[110]">
         <Link to="/" className={cn(
           "font-heading font-bold text-[1.8rem] flex items-center tracking-tight transition-colors duration-400 leading-none",
           isDarkText ? "text-[#C8A96E]" : "text-white"
