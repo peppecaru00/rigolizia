@@ -1,9 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { getGalleryImagesByCategory } from '../lib/images';
 import { useTranslation } from '../hooks/useTranslation';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '../lib/utils';
+import GalleryLightbox from '../components/GalleryLightbox';
 
 const getCategoryDisplayName = (cat: string, lang: string) => {
   if (cat === 'All') return lang === 'it' ? 'Tutte' : 'All';
@@ -21,19 +22,56 @@ const getCategoryDisplayName = (cat: string, lang: string) => {
   return displayName.charAt(0).toUpperCase() + displayName.slice(1);
 };
 
+/** Returns the number of columns based on window width */
+function useColumnCount() {
+  const [cols, setCols] = useState(() => {
+    if (typeof window === 'undefined') return 1;
+    const w = window.innerWidth;
+    if (w >= 1280) return 4;
+    if (w >= 1024) return 3;
+    if (w >= 640) return 2;
+    return 1;
+  });
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w >= 1280) setCols(4);
+      else if (w >= 1024) setCols(3);
+      else if (w >= 640) setCols(2);
+      else setCols(1);
+    };
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  return cols;
+}
+
+/** Distributes items into columns in left-to-right order (round-robin) */
+function distributeToColumns<T>(items: T[], colCount: number): { item: T; originalIndex: number }[][] {
+  const columns: { item: T; originalIndex: number }[][] = Array.from({ length: colCount }, () => []);
+  items.forEach((item, i) => {
+    columns[i % colCount].push({ item, originalIndex: i });
+  });
+  return columns;
+}
+
 const Gallery: React.FC = () => {
   const { lang } = useTranslation();
+  const colCount = useColumnCount();
 
   const categoryMap = useMemo(() => getGalleryImagesByCategory(), []);
   const availableCategories = Object.keys(categoryMap).sort((a, b) => {
-    // Keep 'All' as the first option
     if (a === 'All') return -1;
     if (b === 'All') return 1;
     return a.localeCompare(b);
   });
 
   const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const activeImages = categoryMap[activeCategory] || [];
+  const columns = useMemo(() => distributeToColumns(activeImages, colCount), [activeImages, colCount]);
 
   return (
     <div className="min-h-screen bg-[#FAF3E8] pt-32 pb-24 px-6 md:px-12 max-w-[1800px] mx-auto">
@@ -75,38 +113,52 @@ const Gallery: React.FC = () => {
         </div>
       )}
 
-      {/* Masonry Layout - CSS Columns (no overlap) */}
+      {/* Masonry Layout - Left-to-Right Order */}
       {activeImages.length === 0 ? (
         <div className="py-20 text-center text-[#5A4636] font-body text-xl">
           {lang === 'it' ? 'Nessuna immagine trovata in questa categoria.' : 'No images found in this category.'}
         </div>
       ) : (
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-3 space-y-3">
-          {activeImages.map((src: string, idx: number) => (
-            <div
-              key={src}
-              className="break-inside-avoid relative group rounded-2xl overflow-hidden bg-[#E8E0D5] shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
-            >
-              <img
-                src={src}
-                alt={`${getCategoryDisplayName(activeCategory, lang)} ${idx + 1}`}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-              />
+        <div className="flex gap-3 items-start">
+          {columns.map((col, colIdx) => (
+            <div key={colIdx} className="flex-1 flex flex-col gap-3">
+              {col.map(({ item: src, originalIndex }) => (
+                <button
+                  key={src}
+                  onClick={() => setLightboxIndex(originalIndex)}
+                  className="w-full text-left relative group rounded-2xl overflow-hidden bg-[#E8E0D5] shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1 cursor-zoom-in"
+                  aria-label={`View image ${originalIndex + 1}`}
+                >
+                  <img
+                    src={src}
+                    alt={`${getCategoryDisplayName(activeCategory, lang)} ${originalIndex + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                  />
 
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-              {/* Bottom Label */}
-              <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75">
-                <span className="text-white/90 text-xs font-bold tracking-widest drop-shadow-md">
-                  {String(idx + 1).padStart(2, '0')} — Rigolizia
-                </span>
-              </div>
+                  {/* Bottom Label */}
+                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75">
+                    <span className="text-white/90 text-xs font-bold tracking-widest drop-shadow-md">
+                      {String(originalIndex + 1).padStart(2, '0')} — Rigolizia
+                    </span>
+                  </div>
+                </button>
+              ))}
             </div>
           ))}
         </div>
+      )}
+
+      {lightboxIndex !== null && (
+        <GalleryLightbox
+          images={activeImages}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
       )}
     </div>
   );
