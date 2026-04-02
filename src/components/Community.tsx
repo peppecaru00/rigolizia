@@ -1,36 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
-import communityContent from '../data/community.json';
-import Carousel from './Carousel';
 
-interface FBPost {
-  id: string | number;
-  url: string;
+const FB_PAGE_URL = 'https://www.facebook.com/61585159655551';
+
+declare global {
+  interface Window {
+    FB?: {
+      XFBML: { parse: (el?: HTMLElement) => void };
+    };
+  }
 }
 
 const Community: React.FC = () => {
-  const { t } = useTranslation();
-  const [facebookPosts, setFacebookPosts] = useState<FBPost[]>(
-    communityContent.facebookPosts || []
-  );
+  const { t, lang } = useTranslation();
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  // Re-parse the XFBML whenever language changes so locale updates
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch('/api/facebook');
-        if (!response.ok) return; // Keep static posts if API fails
-
-        const fetchedPosts = await response.json();
-        if (Array.isArray(fetchedPosts) && fetchedPosts.length > 0) {
-          setFacebookPosts(fetchedPosts);
-        }
-      } catch (error) {
-        console.error('Error fetching Facebook posts from API:', error);
+    const tryParse = () => {
+      if (window.FB && containerRef.current) {
+        window.FB.XFBML.parse(containerRef.current);
       }
     };
 
-    fetchPosts();
-  }, []);
+    // Give the SDK a moment to load on first render
+    const timer = setTimeout(tryParse, 300);
+    return () => clearTimeout(timer);
+  }, [lang]);
 
   return (
     <section className="py-[var(--space-xl)] bg-[#FFF9F0] overflow-hidden" id="community">
@@ -47,36 +43,18 @@ const Community: React.FC = () => {
           </p>
         </div>
 
-        <div className="fade-in-scale">
-          <Carousel id="fb-carousel" autoplay={false} gap={32}>
-            {facebookPosts.map((post) => {
-              const encodedUrl = encodeURIComponent(post.url);
-              const iframeSrc = `https://www.facebook.com/plugins/post.php?href=${encodedUrl}&show_text=true&width=500`;
-              return (
-                <div key={post.id} className="basis-full md:basis-[48%] lg:basis-[31%] shrink-0 flex justify-center py-4">
-                  <a
-                    href={post.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full max-w-[500px] bg-white rounded-xl shadow-[0_8px_40px_rgba(44,24,16,0.1)] overflow-hidden border border-black/5 block cursor-pointer transition-transform duration-300 hover:-translate-y-1"
-                  >
-                    <iframe
-                      src={iframeSrc}
-                      width="100%"
-                      height={(post as any).height || 600}
-                      style={{ border: 'none', overflow: 'hidden', borderRadius: '8px' }}
-                      scrolling="no"
-                      frameBorder="0"
-                      allowFullScreen={true}
-                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                      title={`Facebook post ${post.id}`}
-                      className="pointer-events-none md:pointer-events-auto"
-                    />
-                  </a>
-                </div>
-              );
-            })}
-          </Carousel>
+        <div className="fade-in-scale flex justify-center" ref={containerRef}>
+          <div
+            className="fb-page"
+            data-href={FB_PAGE_URL}
+            data-tabs="timeline"
+            data-width="600"
+            data-height="800"
+            data-small-header="true"
+            data-adapt-container-width="true"
+            data-hide-cover="true"
+            data-show-facepile="false"
+          />
         </div>
       </div>
     </section>

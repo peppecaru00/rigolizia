@@ -121,3 +121,10 @@
     transform: translateY(0);
   }
 }
+
+/* ── Facebook Page Plugin border radius ── */
+#community .fb-page > span {
+  border-radius: 16px;
+  overflow: hidden;
+  display: block;
+}
