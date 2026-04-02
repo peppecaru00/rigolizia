@@ -7,7 +7,9 @@ declare global {
   interface Window {
     FB?: {
       XFBML: { parse: (el?: HTMLElement) => void };
+      init: (opts: { xfbml: boolean; version: string }) => void;
     };
+    fbAsyncInit?: () => void;
   }
 }
 
@@ -17,10 +19,12 @@ const Community: React.FC = () => {
 
   useEffect(() => {
     let resizeTimeoutId: number;
-    let pollInterval: number;
 
     const renderFbPlugin = () => {
-      if (!containerRef.current) return;
+      if (!containerRef.current || !window.FB) return;
+
+      // Compute actual container width for mobile accuracy
+      const width = Math.min(containerRef.current.offsetWidth || 500, 500);
 
       containerRef.current.innerHTML = '';
 
@@ -29,34 +33,40 @@ const Community: React.FC = () => {
       fbPage.setAttribute('data-href', FB_PAGE_URL);
       fbPage.setAttribute('data-tabs', 'timeline');
       fbPage.setAttribute('data-height', '800');
+      fbPage.setAttribute('data-width', String(width));
       fbPage.setAttribute('data-adapt-container-width', 'true');
       fbPage.setAttribute('data-small-header', 'true');
       fbPage.setAttribute('data-hide-cover', 'true');
       fbPage.setAttribute('data-show-facepile', 'false');
 
       containerRef.current.appendChild(fbPage);
-      window.FB!.XFBML.parse(containerRef.current);
+      window.FB.XFBML.parse(containerRef.current);
     };
 
-    // Poll until window.FB is available (SDK loads asynchronously)
-    pollInterval = window.setInterval(() => {
+    const initFb = () => {
+      // If SDK already loaded (e.g. navigated back to this section), parse immediately
       if (window.FB) {
-        clearInterval(pollInterval);
         renderFbPlugin();
+      } else {
+        // Register fbAsyncInit so the SDK calls us when it finishes loading
+        const prevInit = window.fbAsyncInit;
+        window.fbAsyncInit = () => {
+          prevInit?.();
+          renderFbPlugin();
+        };
       }
-    }, 200);
+    };
+
+    initFb();
 
     const handleResize = () => {
       clearTimeout(resizeTimeoutId);
-      if (window.FB) {
-        resizeTimeoutId = window.setTimeout(renderFbPlugin, 500);
-      }
+      resizeTimeoutId = window.setTimeout(renderFbPlugin, 400);
     };
 
     window.addEventListener('resize', handleResize);
 
     return () => {
-      clearInterval(pollInterval);
       clearTimeout(resizeTimeoutId);
       window.removeEventListener('resize', handleResize);
     };
