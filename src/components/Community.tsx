@@ -16,15 +16,21 @@ declare global {
 const Community: React.FC = () => {
   const { t, lang } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
+  const lastWidthRef = useRef<number>(0);
 
   useEffect(() => {
     let resizeTimeoutId: number;
 
-    const renderFbPlugin = () => {
+    const renderFbPlugin = (force = false) => {
       if (!containerRef.current || !window.FB) return;
 
       // Compute actual container width for mobile accuracy
       const width = Math.min(containerRef.current.offsetWidth || 500, 500);
+
+      // On mobile the browser URL bar hides/shows on scroll, firing a
+      // resize event that only changes height — skip re-render in that case.
+      if (!force && width === lastWidthRef.current) return;
+      lastWidthRef.current = width;
 
       containerRef.current.innerHTML = '';
 
@@ -32,7 +38,7 @@ const Community: React.FC = () => {
       fbPage.className = 'fb-page';
       fbPage.setAttribute('data-href', FB_PAGE_URL);
       fbPage.setAttribute('data-tabs', 'timeline');
-      fbPage.setAttribute('data-height', '800');
+      fbPage.setAttribute('data-height', '600');
       fbPage.setAttribute('data-width', String(width));
       fbPage.setAttribute('data-adapt-container-width', 'true');
       fbPage.setAttribute('data-small-header', 'true');
@@ -46,22 +52,25 @@ const Community: React.FC = () => {
     const initFb = () => {
       // If SDK already loaded (e.g. navigated back to this section), parse immediately
       if (window.FB) {
-        renderFbPlugin();
+        renderFbPlugin(true);
       } else {
         // Register fbAsyncInit so the SDK calls us when it finishes loading
         const prevInit = window.fbAsyncInit;
         window.fbAsyncInit = () => {
           prevInit?.();
-          renderFbPlugin();
+          renderFbPlugin(true);
         };
       }
     };
 
+    // Reset width ref so lang change always forces a fresh render
+    lastWidthRef.current = 0;
     initFb();
 
     const handleResize = () => {
       clearTimeout(resizeTimeoutId);
-      resizeTimeoutId = window.setTimeout(renderFbPlugin, 400);
+      // Only re-render if width actually changed (ignores mobile URL-bar resize)
+      resizeTimeoutId = window.setTimeout(() => renderFbPlugin(false), 400);
     };
 
     window.addEventListener('resize', handleResize);
