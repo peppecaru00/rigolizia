@@ -48,12 +48,6 @@ const Hero: React.FC<HeroProps> = ({ startCarousel = true }) => {
           {t('hero_subtitle')}
         </p>
 
-        <div className="opacity-0 animate-[heroFadeUp_1s_cubic-bezier(0.22,1,0.36,1)_1.5s_forwards] flex items-center gap-4 mt-4">
-          <span className="text-white uppercase tracking-[0.15em] font-bold text-[0.75rem]">
-            {t('hero_explore')}
-          </span>
-          <div className="w-5 h-5 border-r-2 border-b-2 border-white rotate-45 animate-bounce mt-[-8px]" />
-        </div>
       </div>
     </section>
   );

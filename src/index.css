@@ -122,6 +122,13 @@
   }
 }
 
+@keyframes mouseWheel {
+  0%   { transform: translateY(0);   opacity: 1; }
+  60%  { transform: translateY(10px); opacity: 0; }
+  61%  { transform: translateY(0);   opacity: 0; }
+  100% { transform: translateY(0);   opacity: 1; }
+}
+
 /* ── Facebook Page Plugin border radius ── */
 #community .fb-page > span {
   border-radius: 16px;
