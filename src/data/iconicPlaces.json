@@ -17,14 +17,14 @@
     "id": 2,
     "image": "images/iconicPlaces/theshop.webp",
     "en": {
-      "alt": "The Shop",
-      "title": "The Shop",
+      "alt": "The Tobacco Shop",
+      "title": "The Tobacco Shop",
       "description": "From bread to local wine, fruits, vegetables, drinks, coffee and personal care products, the shop is at the heart of the community."
     },
     "it": {
-      "alt": "Il Minimarket",
-      "title": "Il Minimarket",
-      "description": "Dal pane fresco al vino locale, frutta, verdura, bevande, caffè e prodotti per la cura della persona, il negozio è al centro della comunità."
+      "alt": "Il Tabacchino",
+      "title": "Il Tabacchino",
+      "description": "Dal pane fresco al vino locale, frutta, verdura, bevande, caffè e prodotti per la cura della persona, il tabacchino è al centro della comunità."
     }
   }
 ]
