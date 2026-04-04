@@ -20,12 +20,19 @@ const Community: React.FC = () => {
 
   useEffect(() => {
     let resizeTimeoutId: number;
+    let observer: ResizeObserver | null = null;
 
     const renderFbPlugin = (force = false) => {
-      if (!containerRef.current || !window.FB) return;
+      if (!containerRef.current || !window.FB || !window.FB.XFBML) return;
 
       // Compute actual container width for mobile accuracy
-      const width = Math.min(containerRef.current.offsetWidth || 500, 500);
+      const currentWidth = containerRef.current.offsetWidth;
+      
+      // If width is 0, it means the container hasn't been laid out yet.
+      // Wait for the next frame or resize event.
+      if (currentWidth === 0 && !force) return;
+
+      const width = Math.min(currentWidth || 500, 500);
 
       // On mobile the browser URL bar hides/shows on scroll, firing a
       // resize event that only changes height — skip re-render in that case.
@@ -51,33 +58,43 @@ const Community: React.FC = () => {
 
     const initFb = () => {
       // If SDK already loaded (e.g. navigated back to this section), parse immediately
-      if (window.FB) {
-        renderFbPlugin(true);
-      } else {
-        // Register fbAsyncInit so the SDK calls us when it finishes loading
-        const prevInit = window.fbAsyncInit;
-        window.fbAsyncInit = () => {
-          prevInit?.();
+      // Give it a tiny delay to ensure the container is ready and translated
+      setTimeout(() => {
+        if (window.FB && window.FB.XFBML) {
           renderFbPlugin(true);
-        };
-      }
+        } else {
+          // Register fbAsyncInit so the SDK calls us when it finishes loading
+          const prevInit = window.fbAsyncInit;
+          window.fbAsyncInit = () => {
+            prevInit?.();
+            renderFbPlugin(true);
+          };
+        }
+      }, 100);
     };
 
     // Reset width ref so lang change always forces a fresh render
     lastWidthRef.current = 0;
     initFb();
-
-    const handleResize = () => {
-      clearTimeout(resizeTimeoutId);
-      // Only re-render if width actually changed (ignores mobile URL-bar resize)
-      resizeTimeoutId = window.setTimeout(() => renderFbPlugin(false), 400);
-    };
-
-    window.addEventListener('resize', handleResize);
+    
+    // Use ResizeObserver instead of window resize for better container tracking
+    if (containerRef.current) {
+        observer = new ResizeObserver((entries) => {
+            const entry = entries[0];
+            const newWidth = entry ? Math.round(entry.contentRect.width) : 0;
+            
+            // Only re-render if width is valid and changed significantly
+            if (newWidth > 0 && Math.abs(newWidth - lastWidthRef.current) > 10) {
+                clearTimeout(resizeTimeoutId);
+                resizeTimeoutId = window.setTimeout(() => renderFbPlugin(false), 400);
+            }
+        });
+        observer.observe(containerRef.current);
+    }
 
     return () => {
       clearTimeout(resizeTimeoutId);
-      window.removeEventListener('resize', handleResize);
+      observer?.disconnect();
     };
   }, [lang]);
 
