@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getHeroImages, getPlacesImages, getGalleryImagesByCategory } from '../lib/images';
+import { getHeroImages, getPlacesImages } from '../lib/images';
 
 export function useImagePreloader() {
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -8,10 +8,8 @@ export function useImagePreloader() {
   useEffect(() => {
     const heroImages = getHeroImages();
     const placesImages = getPlacesImages();
-    const galleryCategories = getGalleryImagesByCategory();
-    const galleryImages = galleryCategories['All'] || [];
-    // Preload all dynamic images to ensure smooth transitions
-    const allImages = [...heroImages, ...placesImages, ...galleryImages];
+    // Preload only essential images for the homepage
+    const allImages = [...heroImages, ...placesImages];
     
     if (allImages.length === 0) {
       setImagesLoaded(true);
